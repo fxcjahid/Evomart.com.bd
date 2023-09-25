@@ -1,0 +1,6 @@
+{
+	"name": "Transaction",
+	"alias": "transaction",
+	"description": "The Evomart Transaction Module.",
+	"priority": 100
+}

@@ -1,0 +1,29 @@
+{
+	"name": "evomart/admin",
+	"description": "The Evomart Admin Module.",
+	"authors": [
+		{
+			"name": "Fxc Jahid",
+			"email": "fxcjahid3@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^8.0.2",
+		"maatwebsite/laravel-sidebar": "^2.2",
+		"yajra/laravel-datatables-oracle": "^10.3.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Admin\\": ""
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"minimum-stability": "dev"
+}

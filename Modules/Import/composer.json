@@ -1,0 +1,28 @@
+{
+	"name": "evomart/import",
+	"description": "The Evomart Import Module.",
+	"authors": [
+		{
+			"name": "Fxc Jahid",
+			"email": "fxcjahid3@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^8.0.2",
+		"maatwebsite/excel": "^3.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Import\\": ""
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"minimum-stability": "dev"
+}
