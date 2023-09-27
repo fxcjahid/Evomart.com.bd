@@ -142,17 +142,31 @@
                                                 </span>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="details-info-button-actions">
 
                                         <button
-                                            type="submit"
-                                            class="btn btn-primary btn-add-to-cart"
-                                            :class="{'btn-loading': addingToCart }"
+                                            type="button"
+                                            class="btn btn-primary buynow"
+                                            :class="{'btn-loading': loadingProduct }"
+                                            @click="buyProduct"
                                             {{ $product->isOutOfStock() ? 'disabled' : '' }}
                                         >
                                             <i class="las la-cart-arrow-down"></i>
-                                            {{ trans('storefront::product.add_to_cart') }}
+                                            Buy Now
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary btn-add-to-cart addToCart"
+                                            :class="{'btn-loading': addingToCart }"
+                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}
+                                        >
+                                            Add to cart
                                         </button>
                                     </div>
+
                                 </form>
                             </div>
 
@@ -233,6 +247,7 @@
                     </div>
                 </div>
             </div>
+            <modal-order-methods @close="closeModal" v-if="isLogginedUser"></modal-order-methods>
         </section>
     </product-show>
 @endsection

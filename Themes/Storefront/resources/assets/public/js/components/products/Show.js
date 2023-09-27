@@ -3,9 +3,10 @@ import Errors from '../../Errors';
 import ProductRating from '../ProductRating.vue';
 import ProductCardMixin from '../../mixins/ProductCardMixin';
 import RelatedProducts from './show/RelatedProducts.vue';
+import modalOrderMethods from "./show/modalOrderMethods.vue";
 
 export default {
-    components: { ProductRating, RelatedProducts },
+    components: { ProductRating, RelatedProducts, modalOrderMethods },
 
     mixins: [
         ProductCardMixin,
@@ -33,7 +34,7 @@ export default {
 
     computed: {
         totalReviews() {
-            if (! this.reviews.total) {
+            if (!this.reviews.total) {
                 return this.reviewCount;
             }
 
@@ -124,7 +125,7 @@ export default {
         },
 
         customRadioTypeOptionValueIsActive(optionId, valueId) {
-            if (! this.cartItemForm.options.hasOwnProperty(optionId)) {
+            if (!this.cartItemForm.options.hasOwnProperty(optionId)) {
                 return false;
             }
 
@@ -144,7 +145,7 @@ export default {
         },
 
         customCheckboxTypeOptionValueIsActive(optionId, valueId) {
-            if (! this.cartItemForm.options.hasOwnProperty(optionId)) {
+            if (!this.cartItemForm.options.hasOwnProperty(optionId)) {
                 this.$set(this.cartItemForm.options, optionId, []);
 
                 return false;

@@ -3,9 +3,13 @@
 @section('title', trans('storefront::checkout.checkout'))
 
 @section('content')
-    <checkout-create customer-email="{{ auth()->user()->email ?? null }}"
-        customer-phone="{{ auth()->user()->phone ?? null }}" :addresses="{{ $addresses }}"
-        :default-address="{{ $defaultAddress }}" :gateways="{{ $gateways }}" :countries="{{ json_encode($countries) }}"
+    <checkout-create
+        customer-email="{{ auth()->user()->email ?? null }}"
+        customer-phone="{{ auth()->user()->phone ?? null }}"
+        :addresses="{{ $addresses }}"
+        :default-address="{{ $defaultAddress }}"
+        :gateways="{{ $gateways }}"
+        :countries="{{ json_encode($countries) }}"
         inline-template>
         <section class="checkout-wrap">
             <div class="container">

@@ -2,22 +2,22 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Modules\User\Contracts\Authentication;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
-use Modules\User\Mail\ResetPasswordEmail;
-use Modules\User\Contracts\Authentication;
 use Modules\User\Events\CustomerRegistered;
 use Modules\User\Http\Requests\LoginRequest;
-use Modules\User\Http\Requests\RegisterRequest;
 use Modules\User\Http\Requests\PasswordResetRequest;
+use Modules\User\Http\Requests\RegisterRequest;
 use Modules\User\Http\Requests\ResetCompleteRequest;
-use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
-use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Modules\User\Mail\ResetPasswordEmail;
 
-abstract class BaseAuthController extends Controller
-{
+abstract class BaseAuthController extends Controller {
     /**
      * The Authentication instance.
      *
@@ -28,8 +28,7 @@ abstract class BaseAuthController extends Controller
     /**
      * @param \Modules\User\Contracts\Authentication $auth
      */
-    public function __construct(Authentication $auth)
-    {
+    public function __construct(Authentication $auth) {
         $this->auth = $auth;
 
         $this->middleware('guest')->except('getLogout');
@@ -69,26 +68,48 @@ abstract class BaseAuthController extends Controller
      * @param \Modules\User\Http\Requests\LoginRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(LoginRequest $request)
-    {
+    public function postLogin(LoginRequest $request) {
         try {
             $loggedIn = $this->auth->login([
-                'email' => $request->email,
+                'email'    => $request->email,
                 'password' => $request->password,
             ], (bool) $request->get('remember_me', false));
 
-            if (! $loggedIn) {
-                return back()->withInput()
-                    ->withError(trans('user::messages.users.invalid_credentials'));
+            if (!$loggedIn) {
+                $errorMessage = trans('user::messages.users.invalid_credentials');
+
+                if ($request->ajax()) {
+                    // Return JSON response for Ajax request
+                    return response()->json(['error' => $errorMessage], 400);
+                } else {
+                    return back()->withInput()->withError($errorMessage);
+                }
             }
 
-            return redirect()->intended($this->redirectTo());
+            if ($request->ajax()) {
+                // Return JSON response for Ajax request
+                return response()->json(['success' => 'Login successful']);
+            } else {
+                return redirect()->intended($this->redirectTo());
+            }
         } catch (NotActivatedException $e) {
-            return back()->withInput()
-                ->withError(trans('user::messages.users.account_not_activated'));
+            $errorMessage = trans('user::messages.users.account_not_activated');
+
+            if ($request->ajax()) {
+                // Return JSON response for Ajax request
+                return response()->json(['error' => $errorMessage], 400);
+            } else {
+                return back()->withInput()->withError($errorMessage);
+            }
         } catch (ThrottlingException $e) {
-            return back()->withInput()
-                ->withError(trans('user::messages.users.account_is_blocked', ['delay' => $e->getDelay()]));
+            $errorMessage = trans('user::messages.users.account_is_blocked', ['delay' => $e->getDelay()]);
+
+            if ($request->ajax()) {
+                // Return JSON response for Ajax request
+                return response()->json(['error' => $errorMessage], 400);
+            } else {
+                return back()->withInput()->withError($errorMessage);
+            }
         }
     }
 
@@ -97,8 +118,7 @@ abstract class BaseAuthController extends Controller
      *
      * @return void
      */
-    public function getLogout()
-    {
+    public function getLogout() {
         $this->auth->logout();
 
         return redirect($this->loginUrl());
@@ -110,8 +130,7 @@ abstract class BaseAuthController extends Controller
      * @param \Modules\User\Http\Requests\RegisterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(RegisterRequest $request)
-    {
+    public function postRegister(RegisterRequest $request) {
         $user = $this->auth->registerAndActivate($request->only([
             'first_name',
             'last_name',
@@ -128,8 +147,7 @@ abstract class BaseAuthController extends Controller
             ->withSuccess(trans('user::messages.users.account_created'));
     }
 
-    protected function assignCustomerRole($user)
-    {
+    protected function assignCustomerRole($user) {
         $role = Role::findOrNew(setting('customer_role'));
 
         if ($role->exists) {
@@ -143,8 +161,7 @@ abstract class BaseAuthController extends Controller
      * @param \Modules\User\Http\Requests\PasswordResetRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function postReset(PasswordResetRequest $request)
-    {
+    public function postReset(PasswordResetRequest $request) {
         $user = User::where('email', $request->email)->first();
 
         if (is_null($user)) {
@@ -183,8 +200,7 @@ abstract class BaseAuthController extends Controller
      * @param string $code
      * @return \Illuminate\Http\Response
      */
-    public function getResetComplete($email, $code)
-    {
+    public function getResetComplete($email, $code) {
         $user = User::where('email', $email)->firstOrFail();
 
         if ($this->invalidResetCode($user, $code)) {
@@ -202,8 +218,7 @@ abstract class BaseAuthController extends Controller
      * @param string $code
      * @return bool
      */
-    private function invalidResetCode($user, $code)
-    {
+    private function invalidResetCode($user, $code) {
         return $user->reminders()->where('code', $code)->doesntExist();
     }
 
@@ -215,13 +230,12 @@ abstract class BaseAuthController extends Controller
      * @param \Modules\User\Http\Requests\ResetCompleteRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function postResetComplete($email, $code, ResetCompleteRequest $request)
-    {
+    public function postResetComplete($email, $code, ResetCompleteRequest $request) {
         $user = User::where('email', $email)->firstOrFail();
 
         $completed = $this->auth->completeResetPassword($user, $code, $request->new_password);
 
-        if (! $completed) {
+        if (!$completed) {
             return back()->withInput()
                 ->withError(trans('user::messages.users.invalid_reset_code'));
         }

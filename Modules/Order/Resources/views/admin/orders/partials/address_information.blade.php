@@ -17,9 +17,8 @@
                         <br>
                     @endif
 
-                    {{ $order->billing_city }}, {{ $order->billing_state_name }} {{ $order->billing_zip }}
+                    {{ $order->billing_city }} {{ $order->billing_state_name }} {{ $order->billing_zip }}
                     <br>
-                    {{ $order->billing_country_name }}
                 </span>
             </div>
         </div>
@@ -39,9 +38,8 @@
                         <br>
                     @endif
 
-                    {{ $order->shipping_city }}, {{ $order->shipping_state_name }} {{ $order->shipping_zip }}
+                    {{ $order->shipping_city }}  {{ $order->shipping_state_name }} {{ $order->shipping_zip }}
                     <br>
-                    {{ $order->shipping_country_name }}
                 </span>
             </div>
         </div>

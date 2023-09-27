@@ -4,6 +4,8 @@ export default {
     data() {
         return {
             addingToCart: false,
+            loadingProduct: false,
+            isLogginedUser: false,
         };
     },
 
@@ -73,6 +75,31 @@ export default {
                 .always(() => {
                     this.addingToCart = false;
                 });
+        },
+
+        closeModal() {
+            this.isLogginedUser = false;
+        },
+
+        async buyProduct() {
+
+            await $.ajax({
+                method: 'POST',
+                url: route('cart.items.store', { product_id: this.product.id, qty: 1 }),
+            }).then((cart) => {
+                store.updateCart(cart);
+            }).catch((xhr) => {
+                this.$notify(xhr.responseJSON.message);
+            }).always(() => {
+                this.loadingProduct = false;
+            });
+
+            if (window.Evomart.loggedIn) {
+                document.location.href = route('checkout.create');
+            } else {
+                this.isLogginedUser = true;
+            }
+
         },
     },
 };
