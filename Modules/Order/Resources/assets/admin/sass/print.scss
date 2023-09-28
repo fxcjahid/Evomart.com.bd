@@ -11,7 +11,15 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6, ul, li, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+p {
     margin: 0;
     padding: 0;
     color: #444444;
@@ -67,7 +75,8 @@ table {
     background-color: transparent;
 }
 
-td, th {
+td,
+th {
     padding: 0;
 }
 
@@ -76,7 +85,8 @@ td, th {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 
-    &:before, &:after {
+    &:before,
+    &:after {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
@@ -173,33 +183,34 @@ th {
     margin-bottom: 20px;
 
     > {
-        thead > tr > th,
-        tbody > tr > th,
-        tfoot > tr > th,
-        thead > tr > td,
-        tbody > tr > td,
-        tfoot > tr > td {
+
+        thead>tr>th,
+        tbody>tr>th,
+        tfoot>tr>th,
+        thead>tr>td,
+        tbody>tr>td,
+        tfoot>tr>td {
             padding: 8px;
             line-height: 1.42857143;
             vertical-align: top;
             border-top: 1px solid #dddddd;
         }
 
-        thead > tr > th {
+        thead>tr>th {
             vertical-align: bottom;
             border-bottom: 2px solid #dddddd;
         }
 
-        caption + thead > tr:first-child > th,
-        colgroup + thead > tr:first-child > th,
-        thead:first-child > tr:first-child > th,
-        caption + thead > tr:first-child > td,
-        colgroup + thead > tr:first-child > td,
-        thead:first-child > tr:first-child > td {
+        caption+thead>tr:first-child>th,
+        colgroup+thead>tr:first-child>th,
+        thead:first-child>tr:first-child>th,
+        caption+thead>tr:first-child>td,
+        colgroup+thead>tr:first-child>td,
+        thead:first-child>tr:first-child>td {
             border-top: 0;
         }
 
-        tbody + tbody {
+        tbody+tbody {
             border-top: 2px solid #dddddd;
         }
     }
@@ -235,16 +246,17 @@ table {
         overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar;
 
-        > .table {
+        >.table {
             margin-bottom: 0;
 
             > {
-                thead > tr > th,
-                tbody > tr > th,
-                tfoot > tr > th,
-                thead > tr > td,
-                tbody > tr > td,
-                tfoot > tr > td {
+
+                thead>tr>th,
+                tbody>tr>th,
+                tfoot>tr>th,
+                thead>tr>td,
+                tbody>tr>td,
+                tfoot>tr>td {
                     white-space: nowrap;
                 }
             }
@@ -253,27 +265,34 @@ table {
 }
 
 .clearfix {
+
     &:before,
     &:after {
         content: "";
         display: table;
     }
 }
+
 .container {
+
     &:before,
     &:after {
         content: "";
         display: table;
     }
 }
+
 .container-fluid {
+
     &:before,
     &:after {
         content: "";
         display: table;
     }
 }
+
 .row {
+
     &:before,
     &:after {
         content: "";
@@ -400,7 +419,7 @@ table {
     margin-top: 25px;
 }
 
-.invoice-address > span {
+.invoice-address>span {
     font-size: 15px;
     display: block;
     color: #444444;
@@ -565,7 +584,7 @@ table {
                 display: block;
                 padding: 15px 0 5px 0;
 
-                > span {
+                >span {
                     font-size: 17px;
                     white-space: pre-wrap;
                 }
@@ -585,7 +604,7 @@ table {
             label {
                 font-size: 15px;
 
-                + span {
+                +span {
                     font-size: 15px;
                     margin-left: 5px;
                 }
@@ -596,7 +615,7 @@ table {
     .rtl .cart-list {
         tbody td {
             label {
-                + span {
+                +span {
                     margin-left: 0;
                     margin-right: 5px;
                 }
@@ -679,7 +698,7 @@ table {
     }
 
     .invoice-details .table td:last-child,
-    .invoice-address > span {
+    .invoice-address>span {
         color: #444444;
     }
 
@@ -695,4 +714,10 @@ table {
 @page {
     size: A4;
     margin: 0;
+}
+
+.invoice-logo {
+    width: 200px;
+    pointer-events: none;
+    filter: grayscale(1);
 }

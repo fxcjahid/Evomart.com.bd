@@ -2,62 +2,56 @@
 
 namespace Modules\Payment\Providers;
 
+use Illuminate\Support\ServiceProvider;
+use Modules\Payment\Facades\Gateway;
 use Modules\Payment\Gateways\AuthorizeNet;
+use Modules\Payment\Gateways\BankTransfer;
+use Modules\Payment\Gateways\CheckPayment;
 use Modules\Payment\Gateways\COD;
 use Modules\Payment\Gateways\Flutterwave;
 use Modules\Payment\Gateways\Instamojo;
-use Modules\Payment\Gateways\Paystack;
-use Modules\Payment\Facades\Gateway;
-use Modules\Payment\Gateways\PayPal;
-use Modules\Payment\Gateways\Paytm;
-use Modules\Payment\Gateways\Stripe;
-use Modules\Payment\Gateways\Razorpay;
-use Illuminate\Support\ServiceProvider;
-use Modules\Payment\Gateways\BankTransfer;
-use Modules\Payment\Gateways\CheckPayment;
 use Modules\Payment\Gateways\MercadoPago;
+use Modules\Payment\Gateways\PayPal;
+use Modules\Payment\Gateways\Paystack;
+use Modules\Payment\Gateways\Paytm;
+use Modules\Payment\Gateways\Razorpay;
+use Modules\Payment\Gateways\Stripe;
 
-class PaymentServiceProvider extends ServiceProvider
-{
+class PaymentServiceProvider extends ServiceProvider {
     /**
      * Register the service provider.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
 
     }
-
 
     /**
      * Bootstrap any application services.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         if (!config('app.installed')) {
             return;
         }
 
-        $this->registerPayPalExpress();
-        $this->registerStripe();
-        $this->registerPaytm();
-        $this->registerRazorpay();
-        $this->registerInstamojo();
-        $this->registerAuthorizenet();
-        $this->registerPaystack();
-        $this->registerMercadoPago();
-        $this->registerFlutterwave();
+        // $this->registerPayPalExpress();
+        // $this->registerStripe();
+        // $this->registerPaytm();
+        // $this->registerRazorpay();
+        // $this->registerInstamojo();
+        // $this->registerAuthorizenet();
+        // $this->registerPaystack();
+        // $this->registerMercadoPago();
+        // $this->registerFlutterwave();
+        // $this->registerBankTransfer();
+        // $this->registerCheckPayment();
         $this->registerCashOnDelivery();
-        $this->registerBankTransfer();
-        $this->registerCheckPayment();
     }
 
-
-    private function enabled($paymentMethod)
-    {
+    private function enabled($paymentMethod) {
         if (app('inAdminPanel')) {
             return true;
         }
@@ -65,95 +59,73 @@ class PaymentServiceProvider extends ServiceProvider
         return setting("{$paymentMethod}_enabled");
     }
 
-
-    private function registerPayPalExpress()
-    {
+    private function registerPayPalExpress() {
         if ($this->enabled('paypal')) {
             Gateway::register('paypal', new PayPal());
         }
     }
 
-
-    private function registerStripe()
-    {
+    private function registerStripe() {
         if ($this->enabled('stripe')) {
             Gateway::register('stripe', new Stripe());
         }
     }
 
-
-    private function registerPaytm()
-    {
+    private function registerPaytm() {
         if ($this->enabled('paytm')) {
             Gateway::register('paytm', new Paytm());
         }
     }
 
-
-    private function registerRazorpay()
-    {
+    private function registerRazorpay() {
         if ($this->enabled('razorpay')) {
             Gateway::register('razorpay', new Razorpay());
         }
     }
 
-
-    private function registerInstamojo()
-    {
+    private function registerInstamojo() {
         if ($this->enabled('instamojo')) {
             Gateway::register('instamojo', new Instamojo());
         }
     }
 
-
-    private function registerPaystack()
-    {
+    private function registerPaystack() {
         if ($this->enabled('paystack')) {
             Gateway::register('paystack', new Paystack());
         }
     }
 
-
-    private function registerAuthorizenet()
-    {
+    private function registerAuthorizenet() {
         if ($this->enabled('authorizenet')) {
             Gateway::register('authorizenet', new AuthorizeNet());
         }
     }
 
-    private function registerMercadoPago()
-    {
+    private function registerMercadoPago() {
         if ($this->enabled('mercadopago')) {
             Gateway::register('mercadopago', new MercadoPago());
         }
     }
 
-    private function registerFlutterwave()
-    {
+    private function registerFlutterwave() {
         if ($this->enabled('flutterwave')) {
             Gateway::register('flutterwave', new Flutterwave());
         }
     }
 
-
-    private function registerCashOnDelivery()
-    {
+    private function registerCashOnDelivery() {
         if ($this->enabled('cod')) {
             Gateway::register('cod', new COD());
         }
     }
 
-
-    private function registerBankTransfer()
-    {
+    private function registerBankTransfer() {
         if ($this->enabled('bank_transfer')) {
             Gateway::register('bank_transfer', new BankTransfer());
         }
     }
 
-
-    private function registerCheckPayment()
-    {
+    private function registerCheckPayment() {
         if ($this->enabled('check_payment')) {
             Gateway::register('check_payment', new CheckPayment());
         }

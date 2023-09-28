@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ trans('order::print.invoice') }}</title>
+    <title>{{ trans('order::print.invoice') }} #{{ $order->id }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <link href="{{ v(Module::asset('order:admin/css/print.css')) }}" rel="stylesheet">
@@ -22,7 +22,11 @@
             <div class="invoice-header clearfix">
                 <div class="col-md-3">
                     <div class="store-name">
-                        <h1>{{ setting('store_name') }}</h1>
+                        @if (is_null($logo))
+                            <h1>{{ setting('store_name').'.com' }}</h1>
+                        @else
+                            <img class="invoice-logo" src="{{ $logo }}" alt="logo">
+                        @endif
                     </div>
                 </div>
 

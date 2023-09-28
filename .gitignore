@@ -17,5 +17,4 @@ public/phplog
 mix-manifest.json
 npm-debug.log
 yarn-error.log
-*.map
-.env
+*.map 
