@@ -1,5 +1,5 @@
-<aside class="left-sidebar">
-    @if ($upSellProducts->isNotEmpty())
+@if ($upSellProducts->isNotEmpty())
+    <aside class="left-sidebar">
         <div class="vertical-products">
             <div class="vertical-products-header">
                 <h4 class="section-title">{{ trans('storefront::product.you_might_also_like') }}</h4>
@@ -15,15 +15,15 @@
                 @endforeach
             </div>
         </div>
-    @endif
 
-    @if ($banner->image->exists)
-        <a
-            href="{{ $banner->call_to_action_url }}"
-            class="banner d-none d-lg-block"
-            target="{{ $banner->open_in_new_window ? '_blank' : '_self' }}"
-        >
-            <img src="{{ $banner->image->path }}" alt="Banner">
-        </a>
-    @endif
-</aside>
+        @if ($banner->image->exists)
+            <a
+                href="{{ $banner->call_to_action_url }}"
+                class="banner d-none d-lg-block"
+                target="{{ $banner->open_in_new_window ? '_blank' : '_self' }}"
+            >
+                <img src="{{ $banner->image->path }}" alt="Banner">
+            </a>
+        @endif
+    </aside>
+@endif
