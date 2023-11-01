@@ -8,7 +8,8 @@
 @endcomponent
 
 @section('content')
-    <form method="POST" action="{{ route('admin.products.store') }}" class="form-horizontal" id="product-create-form" enctype="multipart/form-data" novalidate>
+    <form method="POST" action="{{ route('admin.products.store') }}" class="form-horizontal" id="product-create-form"
+        enctype="multipart/form-data" novalidate>
         {{ csrf_field() }}
 
         {!! $tabs->render(compact('product')) !!}

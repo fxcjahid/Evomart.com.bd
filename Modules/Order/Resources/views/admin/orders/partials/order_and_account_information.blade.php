@@ -5,14 +5,14 @@
             <i class="fa fa-print" aria-hidden="true"></i>
         </a>
 
-        <form method="POST" action="{{ route('admin.orders.email.store', $order) }}">
+        {{-- <form method="POST" action="{{ route('admin.orders.email.store', $order) }}">
             {{ csrf_field() }}
 
             <button type="submit" class="btn btn-default" data-toggle="tooltip"
                 title="{{ trans('order::orders.send_email') }}" data-loading>
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
             </button>
-        </form>
+        </form> --}}
     </div>
 
     <h3 class="section-title">{{ trans('order::orders.order_and_account_information') }}</h3>
@@ -106,23 +106,39 @@
                                 <td>{{ $order->customer_full_name }}</td>
                             </tr>
 
-                            <tr>
-                                <td>{{ trans('order::orders.customer_email') }}</td>
-                                <td>{{ $order->customer_email }}</td>
-                            </tr>
+                            @if ($order->customer_email)
+                                <tr>
+                                    <td>{{ trans('order::orders.customer_email') }}</td>
+                                    <td>{{ $order->customer_email }}</td>
+                                </tr>
+                            @endif
 
-                            <tr>
-                                <td>{{ trans('order::orders.customer_phone') }}</td>
-                                <td>{{ $order->customer_phone }}</td>
-                            </tr>
+                            @if ($order->customer_phone)
+                                <tr>
+                                    <td>{{ trans('order::orders.customer_phone') }}</td>
+                                    <td>{{ $order->customer_phone }}</td>
+                                </tr>
+                            @endif
 
-                            <tr>
-                                <td>{{ trans('order::orders.customer_group') }}</td>
+                            @if ($order->create_by)
+                                <tr>
+                                    <td>Create By </td>
 
-                                <td>
-                                    {{ is_null($order->customer_id) ? trans('order::orders.guest') : trans('order::orders.registered') }}
-                                </td>
-                            </tr>
+                                    <td>
+                                        {{ $order->create_by }} (Manual Member)
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td>{{ trans('order::orders.customer_group') }}</td>
+
+                                    <td>
+                                        {{ is_null($order->customer_id) ? trans('order::orders.guest') : trans('order::orders.registered') }}
+                                    </td>
+                                </tr>
+                            @endif
+
+
                         </tbody>
                     </table>
                 </div>

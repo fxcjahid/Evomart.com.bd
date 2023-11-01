@@ -13,10 +13,12 @@
                 <form @submit.prevent="createInvoice" autocomplete="off">
                     <div class="row">
                         <div class="col-md-6">
+
                             @include('invoice::admin.form.cart.index')
                             @include('invoice::admin.form.cart.cart_items')
 
                         </div>
+
                         <div class="col-md-6" :style="[cartIsNotEmpty ? { 'opacity': 0.4, 'pointer-events': 'none' } : '']">
 
                             @include('invoice::admin.form.input.invoice')
@@ -199,8 +201,10 @@
                         document.querySelector('.selectize-input > input').addEventListener('blur', () => {
 
                             const dataSelectable = document.querySelectorAll(
-                                '#selectedProducts > option');
+                                '.select-products select option');
+
                             console.log(dataSelectable);
+
                             that.selectedKey = [];
                             that.laodingCart = true;
 
@@ -212,7 +216,7 @@
                             };
 
                             dataSelectable.forEach((item, index, dataSelectable) => {
-                                console.log(item);
+
                                 that.selectedKey.push(parseInt(item.value));
 
                                 if (Object.is(dataSelectable.length - 1, index)) {
