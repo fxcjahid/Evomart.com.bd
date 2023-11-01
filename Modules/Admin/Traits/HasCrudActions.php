@@ -3,8 +3,8 @@
 namespace Modules\Admin\Traits;
 
 use Illuminate\Http\Request;
-use Modules\Support\Search\Searchable;
 use Modules\Admin\Ui\Facades\TabManager;
+use Modules\Support\Search\Searchable;
 
 trait HasCrudActions
 {
@@ -39,7 +39,7 @@ trait HasCrudActions
     public function create()
     {
         $data = array_merge([
-            'tabs' => TabManager::get($this->getModel()->getTable()),
+            'tabs'                   => TabManager::get($this->getModel()->getTable()),
             $this->getResourceName() => $this->getModel(),
         ], $this->getFormData('create'));
 
@@ -95,7 +95,7 @@ trait HasCrudActions
     public function edit($id)
     {
         $data = array_merge([
-            'tabs' => TabManager::get($this->getModel()->getTable()),
+            'tabs'                   => TabManager::get($this->getModel()->getTable()),
             $this->getResourceName() => $this->getEntity($id),
         ], $this->getFormData('edit', $id));
 
@@ -251,7 +251,7 @@ trait HasCrudActions
      */
     protected function getRequest($action)
     {
-        if (! isset($this->validation)) {
+        if (!isset($this->validation)) {
             return request();
         }
 

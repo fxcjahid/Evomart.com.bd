@@ -1,0 +1,25 @@
+{
+    "name": "fleetcart/invoice",
+    "description": "",
+    "authors": [
+        {
+            "name": "Mehedi Hasan",
+            "email": "mehedi5531@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Invoice\\Providers\\InvoiceServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Invoice\\": ""
+        }
+    }
+}

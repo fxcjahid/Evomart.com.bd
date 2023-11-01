@@ -139,6 +139,9 @@ class AdminAccount
             // import
             'admin.importer.index'         => true,
             'admin.importer.create'        => true,
+            // import
+            'admin.invoice.index'          => true,
+            'admin.invoice.edit'           => true,
             // reports
             'admin.reports.index'          => true,
             // settings

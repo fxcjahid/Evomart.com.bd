@@ -2,8 +2,8 @@
 
 namespace Modules\User\Http\Controllers\Admin;
 
-use Modules\User\Entities\Role;
 use Modules\Admin\Traits\HasCrudActions;
+use Modules\User\Entities\Role;
 use Modules\User\Http\Requests\SaveRoleRequest;
 
 class RoleController

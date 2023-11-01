@@ -12,9 +12,9 @@ class EntityGenerator extends Generator
      * @var array
      */
     protected $views = [
-        'views/index.stub' => 'Resources/views/admin/$ENTITY_NAME$/index.blade.php',
-        'views/create.stub' => 'Resources/views/admin/$ENTITY_NAME$/create.blade.php',
-        'views/edit.stub' => 'Resources/views/admin/$ENTITY_NAME$/edit.blade.php',
+        'views/index.stub'     => 'Resources/views/admin/$ENTITY_NAME$/index.blade.php',
+        'views/create.stub'    => 'Resources/views/admin/$ENTITY_NAME$/create.blade.php',
+        'views/edit.stub'      => 'Resources/views/admin/$ENTITY_NAME$/edit.blade.php',
         'views/shortcuts.stub' => 'Resources/views/admin/$ENTITY_NAME$/partials/shortcuts.blade.php',
     ];
 
@@ -83,7 +83,7 @@ class EntityGenerator extends Generator
      */
     private function generateMigrations($entity)
     {
-        $entityName = snake_case(str_plural($entity));
+        $entityName        = snake_case(str_plural($entity));
         $migrationFileName = $this->getDateTimePrefix() . "create_{$entityName}_table.php";
 
         $this->finder->put(
@@ -107,9 +107,9 @@ class EntityGenerator extends Generator
      */
     private function getDateTimePrefix()
     {
-        $time = microtime(true);
+        $time  = microtime(true);
         $micro = sprintf('%06d', ($time - floor($time)) * 1000000);
-        $date = new DateTime(date('Y-m-d H:i:s.' . $micro, $time));
+        $date  = new DateTime(date('Y-m-d H:i:s.' . $micro, $time));
 
         return $date->format('Y_m_d_Hisu_');
     }
