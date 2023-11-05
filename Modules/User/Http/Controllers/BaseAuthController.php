@@ -72,11 +72,17 @@ abstract class BaseAuthController extends Controller
      */
     public function postLogin(LoginRequest $request)
     {
+        $credentials = [
+            'password' => $request->password,
+        ];
+
+        $loginField = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        $credentials[$loginField] = $request->email;
+
         try {
-            $loggedIn = $this->auth->login([
-                'email'    => $request->email,
-                'password' => $request->password,
-            ], (bool) $request->get('remember_me', false));
+
+            $loggedIn = $this->auth->login($credentials, (bool) $request->get('remember_me', false));
 
             if (!$loggedIn) {
                 $errorMessage = trans('user::messages.users.invalid_credentials');
