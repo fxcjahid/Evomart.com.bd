@@ -31,8 +31,6 @@
                             <i class="lar la-heart"></i>
                             <div class="count" v-text="wishlistCount"></div>
                         </div>
-
-                        <span>{{ trans('storefront::layout.favorites') }}</span>
                     </a>
 
                     <div class="header-cart">
@@ -40,9 +38,22 @@
                             <i class="las la-cart-arrow-down"></i>
                             <div class="count" v-text="cart.quantity"></div>
                         </div>
-
-                        <span v-html="cart.subTotal.inCurrentCurrency.formatted"></span>
                     </div>
+
+                    @auth
+                        <a class="header-auth" href="{{ route('account.dashboard.index') }}">
+                            <div class="icon-wrap">
+                                <i class="las la-user" style="font-size: 45px;"></i>
+                            </div>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="header-login">
+                            <div class="icon-wrap">
+                                {{ trans('storefront::layout.login') }}
+                            </div>
+                        </a>
+                    @endauth
+
                 </div>
             </div>
         </div>

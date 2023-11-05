@@ -20,3 +20,4 @@ yarn-error.log
 *.map 
 Modules/**/vendor/
 Modules/**/.gitkeep
+*.log

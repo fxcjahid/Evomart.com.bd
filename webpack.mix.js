@@ -5,15 +5,15 @@ const execSync = require("child_process").execSync;
 require("laravel-mix-merge-manifest");
 
 // compile admin and theme assets
-let configs = glob.sync(
-    "{./Modules/*/webpack.mix.js,./Themes/*/webpack.mix.js}"
-);
+// let configs = glob.sync(
+//     "{./Modules/*/webpack.mix.js,./Themes/*/webpack.mix.js}"
+// );
 
 // compile admin assets only
 // let configs = glob.sync("./Modules/*/webpack.mix.js");
 
 // compile theme assets only
-// let configs = glob.sync("./Themes/*/webpack.mix.js");
+let configs = glob.sync("./Themes/*/webpack.mix.js");
 
 if (process.env.module !== undefined) {
     let module =

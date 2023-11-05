@@ -1,9 +1,9 @@
 @import 'header/_header-left',
-        'header/_header-search',
-        'header/_searched-keywords',
-        'header/_search-suggestion',
-        'header/_header-right',
-        'header/_sticky-header';
+'header/_header-search',
+'header/_searched-keywords',
+'header/_search-suggestion',
+'header/_header-right',
+'header/_sticky-header';
 
 .header-wrap {
     position: relative;
@@ -11,7 +11,7 @@
 }
 
 .header-wrap-inner {
-    padding: 40px 0;
+    padding: 25px 0;
 }
 
 @media screen and (max-width: $lg) {

@@ -1,8 +1,9 @@
 .search-suggestions {
     position: absolute;
-    left: 41px;
+    left: auto;
     top: 60px;
-    right: 41px;
+    right: 33px;
+    max-width: 60.5%;
     background: $color-white;
     border-bottom: 2px solid $color-default;
     border-bottom: 2px solid var(--color-primary);
@@ -51,7 +52,7 @@
         margin-bottom: 14px;
     }
 
-    & + .product-suggestion {
+    &+.product-suggestion {
         margin-top: 11px;
     }
 }
@@ -183,7 +184,7 @@
 
     .header-search-sm-form {
         &.active {
-            + .search-suggestions {
+            +.search-suggestions {
                 display: block;
             }
         }

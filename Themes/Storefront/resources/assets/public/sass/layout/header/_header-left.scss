@@ -20,7 +20,7 @@
         cursor: pointer;
 
         &:hover {
-            > span {
+            >span {
                 width: 20px;
                 background: $color-default;
                 background: var(--color-primary);
@@ -31,7 +31,7 @@
             }
         }
 
-        > span {
+        >span {
             height: 2px;
             width: 16px;
             margin-bottom: 4px;
@@ -51,12 +51,13 @@
 }
 
 .header-logo {
+    align-items: start;
     display: flex;
-    height: 60px;
-    width: 266px;
-    padding: 0 15px;
-    align-items: center;
+    height: 85px;
     overflow: hidden;
+    padding: 0;
+    width: 266px;
+    margin-top: -20px;
 
     img {
         max-height: 100%;

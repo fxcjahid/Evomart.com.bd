@@ -12,7 +12,7 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="email">{{ trans('user::auth.email') }}<span>*</span></label>
+                        <label for="email">{{ trans('user::auth.login_multiple') }}<span>*</span></label>
                         <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control">
 
                         @error('email')
@@ -31,7 +31,8 @@
 
                     <div class="form-check remember-me">
                         <input type="hidden" name="remember_me" value="0">
-                        <input type="checkbox" name="remember_me" value="1" id="remember" {{ old('remember_me', false) ? 'checked' : '' }}>
+                        <input type="checkbox" name="remember_me" value="1" id="remember"
+                            {{ old('remember_me', false) ? 'checked' : '' }}>
                         <label for="remember" class="form-check-label">{{ trans('user::auth.remember_me') }}</label>
                     </div>
 

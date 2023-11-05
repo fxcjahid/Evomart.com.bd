@@ -3,51 +3,13 @@
         <div class="header-search">
             <form class="search-form" @submit.prevent="search">
                 <div class="header-search-lg">
-                    <input
-                        type="text"
-                        name="query"
-                        class="form-control search-input"
-                        autocomplete="off"
-                        v-model="form.query"
-                        :placeholder="
-                            $trans('storefront::layout.search_for_products')
-                        "
-                        @keydown.esc="hideSuggestions"
-                        @keydown.down="nextSuggestion"
-                        @keydown.up="prevSuggestion"
-                    />
+                    <input type="text" name="query" class="form-control search-input" autocomplete="off"
+                        v-model="form.query" :placeholder="$trans('storefront::layout.search_for_products')
+                            " @keydown.esc="hideSuggestions" @keydown.down="nextSuggestion"
+                        @keydown.up="prevSuggestion" />
 
                     <div class="header-search-right" @focusin="hideSuggestions">
-                        <select
-                            name="category"
-                            class="header-search-select custom-select-option arrow-black"
-                            @nice-select-updated="
-                                changeCategory($event.target.value)
-                            "
-                        >
-                            <option
-                                value=""
-                                :selected="initialCategoryIsNotInCategoryList"
-                            >
-                                {{
-                                    $trans("storefront::layout.all_categories")
-                                }}
-                            </option>
-
-                            <option
-                                v-for="category in categories"
-                                :key="category.slug"
-                                :value="category.slug"
-                                :selected="category.slug === initialCategory"
-                            >
-                                {{ category.name }}
-                            </option>
-                        </select>
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary btn-search"
-                        >
+                        <button type="submit" class="btn btn-search">
                             <i class="las la-search"></i>
                         </button>
                     </div>
@@ -57,37 +19,6 @@
                     <i class="las la-search"></i>
                 </div>
             </form>
-
-            <div
-                v-if="
-                    Boolean(isMostSearchedKeywordsEnabled) &&
-                    mostSearchedKeywords.length !== 0
-                "
-                class="searched-keywords"
-            >
-                <label>
-                    {{ $trans("storefront::layout.most_searched") }}
-                </label>
-
-                <ul class="list-inline searched-keywords-list">
-                    <li
-                        v-for="(
-                            mostSearchedKeyword, index
-                        ) in mostSearchedKeywords"
-                        :key="index"
-                    >
-                        <a
-                            :href="
-                                route('products.index', {
-                                    query: mostSearchedKeyword,
-                                })
-                            "
-                        >
-                            {{ mostSearchedKeyword }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
 
         <div class="header-search-sm-form">
@@ -97,20 +28,9 @@
                 </div>
 
                 <!-- Cannot use v-model due to a bug. See https://github.com/vuejs/vue/issues/8231 -->
-                <input
-                    type="text"
-                    name="query"
-                    class="form-control search-input-sm"
-                    autocomplete="off"
-                    :placeholder="
-                        $trans('storefront::layout.search_for_products')
-                    "
-                    :value="form.query"
-                    @input="form.query = $event.target.value"
-                    @keydown.esc="hideSuggestions"
-                    @keydown.down="nextSuggestion"
-                    @keydown.up="prevSuggestion"
-                />
+                <input type="text" name="query" class="form-control search-input-sm" autocomplete="off" :placeholder="$trans('storefront::layout.search_for_products')
+                    " :value="form.query" @input="form.query = $event.target.value" @keydown.esc="hideSuggestions"
+                    @keydown.down="nextSuggestion" @keydown.up="prevSuggestion" />
 
                 <button type="submit" class="btn btn-search">
                     <i class="las la-search"></i>
@@ -119,34 +39,17 @@
         </div>
 
         <div class="search-suggestions" v-if="shouldShowSuggestions">
-            <div
-                class="search-suggestions-inner custom-scrollbar"
-                ref="searchSuggestionsInner"
-            >
-                <div
-                    class="category-suggestion"
-                    v-if="suggestions.categories.length !== 0"
-                >
+            <div class="search-suggestions-inner custom-scrollbar" ref="searchSuggestionsInner">
+                <div class="category-suggestion" v-if="suggestions.categories.length !== 0">
                     <h6 class="title">
                         {{ $trans("storefront::layout.category_suggestions") }}
                     </h6>
 
                     <ul class="list-inline category-suggestion-list">
-                        <li
-                            v-for="category in suggestions.categories"
-                            :key="category.slug"
-                            class="list-item"
-                            :class="{ active: isActiveSuggestion(category) }"
-                            :ref="category.slug"
-                            @mouseover="changeActiveSuggestion(category)"
-                            @mouseleave="clearActiveSuggestion"
-                        >
-                            <a
-                                :href="category.url"
-                                class="single-item"
-                                v-text="category.name"
-                                @click="hideSuggestions"
-                            >
+                        <li v-for="category in suggestions.categories" :key="category.slug" class="list-item"
+                            :class="{ active: isActiveSuggestion(category) }" :ref="category.slug"
+                            @mouseover="changeActiveSuggestion(category)" @mouseleave="clearActiveSuggestion">
+                            <a :href="category.url" class="single-item" v-text="category.name" @click="hideSuggestions">
                             </a>
                         </li>
                     </ul>
@@ -158,42 +61,22 @@
                     </h6>
 
                     <ul class="list-inline product-suggestion-list">
-                        <li
-                            v-for="product in suggestions.products"
-                            :key="product.slug"
-                            class="list-item"
-                            :class="{ active: isActiveSuggestion(product) }"
-                            :ref="product.slug"
-                            @mouseover="changeActiveSuggestion(product)"
-                            @mouseleave="clearActiveSuggestion"
-                        >
-                            <a
-                                :href="product.url"
-                                class="single-item"
-                                @click="hideSuggestions"
-                            >
+                        <li v-for="product in suggestions.products" :key="product.slug" class="list-item"
+                            :class="{ active: isActiveSuggestion(product) }" :ref="product.slug"
+                            @mouseover="changeActiveSuggestion(product)" @mouseleave="clearActiveSuggestion">
+                            <a :href="product.url" class="single-item" @click="hideSuggestions">
                                 <div class="product-image">
-                                    <img
-                                        :src="baseImage(product)"
-                                        :class="{
-                                            'image-placeholder':
-                                                !hasBaseImage(product),
-                                        }"
-                                        alt="product image"
-                                    />
+                                    <img :src="baseImage(product)" :class="{
+                                        'image-placeholder':
+                                            !hasBaseImage(product),
+                                    }" alt="product image" />
                                 </div>
 
                                 <div class="product-info">
                                     <div class="product-info-top">
-                                        <h6
-                                            class="product-name"
-                                            v-html="product.name"
-                                        ></h6>
+                                        <h6 class="product-name" v-html="product.name"></h6>
 
-                                        <ul
-                                            class="list-inline product-badge"
-                                            v-if="product.is_out_of_stock"
-                                        >
+                                        <ul class="list-inline product-badge" v-if="product.is_out_of_stock">
                                             <li class="badge badge-danger">
                                                 {{
                                                     $trans(
@@ -204,21 +87,14 @@
                                         </ul>
                                     </div>
 
-                                    <div
-                                        class="product-price"
-                                        v-html="product.formatted_price"
-                                    ></div>
+                                    <div class="product-price" v-html="product.formatted_price"></div>
                                 </div>
                             </a>
                         </li>
                     </ul>
 
-                    <a
-                        v-if="suggestions.remaining !== 0"
-                        :href="moreResultsUrl"
-                        @click="hideSuggestions"
-                        class="more-results"
-                    >
+                    <a v-if="suggestions.remaining !== 0" :href="moreResultsUrl" @click="hideSuggestions"
+                        class="more-results">
                         {{
                             $trans("storefront::layout.more_results", {
                                 count: this.suggestions.remaining,

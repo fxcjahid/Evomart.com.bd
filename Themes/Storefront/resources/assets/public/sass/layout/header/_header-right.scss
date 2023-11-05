@@ -1,13 +1,16 @@
 .header-column-right {
     height: 60px;
     padding: 0 15px;
+    gap: 15px;
+
 
     .header-wishlist,
-    .header-cart {
+    .header-cart,
+    .header-auth {
         display: flex;
         align-items: center;
 
-        > span {
+        >span {
             line-height: 28px;
             color: $color-black;
             white-space: nowrap;
@@ -17,21 +20,44 @@
 
     .header-wishlist {
         &:hover {
-            > span,
-            .icon-wrap > i {
+
+            >span,
+            .icon-wrap>i {
                 color: $color-default;
                 color: var(--color-primary);
             }
         }
     }
 
+    .header-login {
+        .icon-wrap {
+            margin-left: 30px;
+            display: flex;
+            align-items: center;
+            background: var(--color-primary);
+            color: var(--white);
+            padding: 13px 22px;
+            border-radius: 4px;
+            font-size: 25px;
+            line-height: 100%;
+
+            i {
+                color: #fff;
+                font-size: 35px;
+                line-height: 100%;
+                padding-right: 7px;
+                transition: 150ms ease-in-out;
+            }
+        }
+    }
+
     .header-cart {
-        margin-left: 35px;
         cursor: pointer;
 
         &:hover {
-            > span,
-            .icon-wrap > i {
+
+            >span,
+            .icon-wrap>i {
                 color: $color-default;
                 color: var(--color-primary);
             }
@@ -42,14 +68,14 @@
         position: relative;
         margin-right: 10px;
 
-        > i {
+        >i {
             font-size: 34px;
             line-height: 36px;
             color: $color-black;
             transition: $transition-default;
         }
 
-        > .count {
+        >.count {
             position: absolute;
             font-size: 10px;
             line-height: 20px;
@@ -73,7 +99,7 @@
 
         .header-wishlist,
         .header-cart {
-            > span {
+            >span {
                 display: none;
             }
         }
@@ -84,10 +110,6 @@
     .header-column-right {
         .header-wishlist {
             display: none;
-        }
-
-        .header-cart {
-            margin-left: 0;
         }
     }
 }

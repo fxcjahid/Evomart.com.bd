@@ -2,7 +2,7 @@
     position: relative;
     min-width: 0;
     flex-grow: 1;
-    padding: 0 40px;
+    padding: 0 1cqh;
 }
 
 @media screen and (min-width: $lg) {
@@ -15,16 +15,26 @@
 .header-search {
     position: relative;
 
+    .search-form {
+        display: flex;
+        justify-content: right;
+    }
+
     .header-search-lg {
         position: relative;
         display: flex;
         border: 1px solid $border-color;
         border-radius: $radius-default;
+        border-radius: 10px;
+        width: 70%;
+        max-width: 900px;
 
         .search-input {
             height: 58px;
             padding-left: 30px;
             border: none;
+            font-size: 16px;
+            border-radius: inherit;
         }
 
         .header-search-right {
@@ -44,7 +54,8 @@
             border-radius: 0 $radius-default $radius-default 0;
 
             >i {
-                font-size: 18px;
+                font-size: 35px;
+                color: #b7b6b6;
                 line-height: 36px;
             }
         }
