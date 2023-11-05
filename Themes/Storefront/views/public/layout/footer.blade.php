@@ -3,22 +3,20 @@
         <div class="footer">
             <div class="footer-top">
                 <div class="row">
-                    <div class="col-lg-5 col-md-8">
+                    <div class="col-lg-6 col-md-8">
                         <div class="contact-us">
-                            <h4 class="title">{{ trans('storefront::layout.contact_us') }}</h4>
+
+                            @if ($storefront_footer_logo->exists)
+                                <a href="{{ route('home') }}" class="footer-logo">
+                                    <img src="{{ $storefront_footer_logo->path }}" alt="footer logo">
+                                </a>
+                            @endif
 
                             <ul class="list-inline contact-info">
-                                @if (setting('store_phone') && ! setting('store_phone_hide'))
-                                    <li>
-                                        <i class="las la-phone"></i>
-                                        <span>{{ setting('store_phone') }}</span>
-                                    </li>
-                                @endif
 
-                                @if (setting('store_email') && ! setting('store_email_hide'))
+                                @if (setting('storefront_footer_tagline'))
                                     <li>
-                                        <i class="las la-envelope"></i>
-                                        <span>{{ setting('store_email') }}</span>
+                                        <span class="tagline">{{ setting('storefront_footer_tagline') }}</span>
                                     </li>
                                 @endif
 
@@ -28,6 +26,21 @@
                                         <span>{{ setting('storefront_address') }}</span>
                                     </li>
                                 @endif
+
+                                @if (setting('store_phone') && !setting('store_phone_hide'))
+                                    <li>
+                                        <i class="las la-phone"></i>
+                                        <span>{{ setting('store_phone') }}</span>
+                                    </li>
+                                @endif
+
+                                @if (setting('store_email') && !setting('store_email_hide'))
+                                    <li>
+                                        <i class="las la-envelope"></i>
+                                        <span>{{ setting('store_email') }}</span>
+                                    </li>
+                                @endif
+
                             </ul>
 
                             @if (social_links()->isNotEmpty())
@@ -44,7 +57,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-5">
+                    <div class="col-lg-4 col-md-5">
                         <div class="footer-links">
                             <h4 class="title">{{ trans('storefront::layout.my_account') }}</h4>
 
@@ -85,7 +98,7 @@
                     </div>
 
                     @if ($footerMenuOne->isNotEmpty())
-                        <div class="col-lg-3 col-md-5">
+                        <div class="col-lg-4 col-md-5">
                             <div class="footer-links">
                                 <h4 class="title">{{ setting('storefront_footer_menu_one_title') }}</h4>
 
@@ -103,7 +116,7 @@
                     @endif
 
                     @if ($footerMenuTwo->isNotEmpty())
-                        <div class="col-lg-3 col-md-5">
+                        <div class="col-lg-4 col-md-5">
                             <div class="footer-links">
                                 <h4 class="title">{{ setting('storefront_footer_menu_two_title') }}</h4>
 
@@ -120,23 +133,28 @@
                         </div>
                     @endif
 
-                    @if ($footerTags->isNotEmpty())
-                        <div class="col-lg-4 col-md-7">
-                            <div class="footer-links footer-tags">
-                                <h4 class="title">{{ trans('storefront::layout.tags') }}</h4>
 
-                                <ul class="list-inline">
-                                    @foreach ($footerTags as $footerTag)
-                                        <li>
-                                            <a href="{{ $footerTag->url() }}">
-                                                {{ $footerTag->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                    <div class="col-lg-4 col-md-7">
+                        <div class="footer-links footer-tags">
+                            <h4 class="title">
+                                Download App
+                            </h4>
+
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="" class="download-app">
+                                        <img src="https://rewardstampapp.com/wp-content/uploads/2020/10/reward_stamp_on_google_play_store-300x87.png"
+                                            alt="Download google playstore app" />
+                                    </a>
+                                    <a href="" class="download-app">
+                                        <img src="https://rewardstampapp.com/wp-content/uploads/2020/10/reward_stamp_on_apple_app_store-300x87.png"
+                                            alt="Download apple store app" />
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    @endif
+                    </div>
+
                 </div>
             </div>
 

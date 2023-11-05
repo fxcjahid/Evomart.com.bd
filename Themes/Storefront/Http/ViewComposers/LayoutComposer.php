@@ -2,18 +2,18 @@
 
 namespace Themes\Storefront\Http\ViewComposers;
 
-use Mexitek\PHPColors\Color;
-use Modules\Compare\Compare;
-use Spatie\SchemaOrg\Schema;
-use Modules\Tag\Entities\Tag;
-use Modules\Cart\Facades\Cart;
-use Modules\Menu\Entities\Menu;
-use Modules\Page\Entities\Page;
-use Modules\Media\Entities\File;
-use Modules\Menu\MegaMenu\MegaMenu;
 use Illuminate\Support\Facades\Cache;
+use Mexitek\PHPColors\Color;
+use Modules\Cart\Facades\Cart;
 use Modules\Category\Entities\Category;
+use Modules\Compare\Compare;
+use Modules\Media\Entities\File;
+use Modules\Menu\Entities\Menu;
+use Modules\Menu\MegaMenu\MegaMenu;
+use Modules\Page\Entities\Page;
 use Modules\Product\Entities\SearchTerm;
+use Modules\Tag\Entities\Tag;
+use Spatie\SchemaOrg\Schema;
 
 class LayoutComposer
 {
@@ -41,25 +41,26 @@ class LayoutComposer
     public function compose($view)
     {
         $view->with([
-            'themeColor' => $this->getThemeColor(),
-            'compareCount' => $this->compare->count(),
-            'favicon' => $this->getFavicon(),
-            'logo' => $this->getHeaderLogo(),
-            'newsletterBgImage' => $this->getNewsletterBgImage(),
-            'privacyPageUrl' => $this->getPrivacyPageUrl(),
-            'categories' => $this->getCategories(),
-            'mostSearchedKeywords' => $this->getMostSearchedKeywords(),
-            'primaryMenu' => $this->getPrimaryMenu(),
-            'categoryMenu' => $this->getCategoryMenu(),
-            'cart' => $this->getCart(),
-            'wishlist' => $this->getWishlist(),
-            'compareList' => $this->compare->list(),
-            'footerMenuOne' => $this->getFooterMenuOne(),
-            'footerMenuTwo' => $this->getFooterMenuTwo(),
-            'footerTags' => $this->getFooterTags(),
-            'copyrightText' => $this->getCopyrightText(),
+            'themeColor'                  => $this->getThemeColor(),
+            'compareCount'                => $this->compare->count(),
+            'favicon'                     => $this->getFavicon(),
+            'logo'                        => $this->getHeaderLogo(),
+            'newsletterBgImage'           => $this->getNewsletterBgImage(),
+            'privacyPageUrl'              => $this->getPrivacyPageUrl(),
+            'categories'                  => $this->getCategories(),
+            'mostSearchedKeywords'        => $this->getMostSearchedKeywords(),
+            'primaryMenu'                 => $this->getPrimaryMenu(),
+            'categoryMenu'                => $this->getCategoryMenu(),
+            'cart'                        => $this->getCart(),
+            'wishlist'                    => $this->getWishlist(),
+            'compareList'                 => $this->compare->list(),
+            'footerMenuOne'               => $this->getFooterMenuOne(),
+            'footerMenuTwo'               => $this->getFooterMenuTwo(),
+            'footerTags'                  => $this->getFooterTags(),
+            'copyrightText'               => $this->getCopyrightText(),
             'acceptedPaymentMethodsImage' => $this->getAcceptedPaymentMethodsImage(),
-            'schemaMarkup' => $this->getSchemaMarkup(),
+            'storefront_footer_logo'      => $this->getStorefrontFooterLogo(),
+            'schemaMarkup'                => $this->getSchemaMarkup(),
         ]);
     }
 
@@ -170,7 +171,7 @@ class LayoutComposer
     {
         return function () use ($tagIds) {
             return Tag::whereIn('id', $tagIds)
-                ->when(! empty($tagIds), function ($query) use ($tagIds) {
+                ->when(!empty($tagIds), function ($query) use ($tagIds) {
                     $tagIdsString = collect($tagIds)->filter()->implode(',');
 
                     $query->orderByRaw("FIELD(id, {$tagIdsString})");
@@ -182,15 +183,20 @@ class LayoutComposer
     private function getCopyrightText()
     {
         return strtr(setting('storefront_copyright_text'), [
-            '{{ store_url }}' => route('home'),
+            '{{ store_url }}'  => route('home'),
             '{{ store_name }}' => setting('store_name'),
-            '{{ year }}' => date('Y'),
+            '{{ year }}'       => date('Y'),
         ]);
     }
 
     private function getAcceptedPaymentMethodsImage()
     {
         return $this->getMedia(setting('storefront_accepted_payment_methods_image'));
+    }
+
+    private function getStorefrontFooterLogo()
+    {
+        return $this->getMedia(setting('storefront_footer_logo'));
     }
 
     private function getSchemaMarkup()

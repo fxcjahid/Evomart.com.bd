@@ -1,6 +1,7 @@
 .footer-top {
     .title {
         margin-bottom: 23px;
+        color: var(--white);
     }
 
     .social-links {
@@ -21,7 +22,7 @@
             a {
                 display: inline-block;
                 max-width: 100%;
-                color: $color-gray;
+                color: #e5e5e5;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -57,7 +58,7 @@
             a {
                 line-height: 33px;
                 display: block;
-                color: $color-gray;
+                color: #d0d0d0;
                 border: 1px solid $color-gray-lite;
                 border-radius: $radius-default;
                 padding: 0 10px;
@@ -80,8 +81,8 @@
 
 @media screen and (max-width: $lg) {
     .footer-top {
-        > .row {
-            > div:nth-child(4) {
+        >.row {
+            >div:nth-child(4) {
                 .footer-links {
                     margin-top: 38px;
                 }

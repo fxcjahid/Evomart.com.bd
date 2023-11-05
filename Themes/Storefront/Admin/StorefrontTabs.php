@@ -119,6 +119,7 @@ class StorefrontTabs extends Tabs
             $tab->view('admin.storefront.tabs.footer', [
                 'tags' => Tag::list(),
                 'acceptedPaymentMethodsImage' => $this->getMedia(setting('storefront_accepted_payment_methods_image')),
+                'storefront_footer_logo' => $this->getMedia(setting('storefront_footer_logo')),
             ]);
         });
     }
