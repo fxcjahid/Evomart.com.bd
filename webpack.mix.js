@@ -10,7 +10,7 @@ require("laravel-mix-merge-manifest");
 // );
 
 // compile admin assets only
-let configs = glob.sync("./Modules/*/webpack.mix.js");
+//let configs = glob.sync("./Modules/*/webpack.mix.js");
 
 // compile theme assets only
 let configs = glob.sync("./Themes/*/webpack.mix.js");

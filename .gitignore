@@ -9,9 +9,7 @@ node_modules/
 /public/modules/
 /public/themes/
 /storage/logs/*
-public/phplog
-/Modules/*/Assets/
-/Themes/*/assets/
+public/phplog 
 /tags
 /.meta
 mix-manifest.json
