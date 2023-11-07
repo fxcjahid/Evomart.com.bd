@@ -1,11 +1,4 @@
-const mix = require('laravel-mix');
-require('laravel-mix-merge-manifest');
+let mix = require('laravel-mix');
+let execSync = require('child_process').execSync;
 
-mix.setPublicPath('../../public').mergeManifest();
-
-mix.js(__dirname + '/Resources/assets/js/app.js', 'js/invoice.js')
-    .sass( __dirname + '/Resources/assets/sass/app.scss', 'css/invoice.css');
-
-if (mix.inProduction()) {
-    mix.version();
-}
+mix.js(`${__dirname}/Resources/assets/admin/js/invoice.js`, `${__dirname}/Assets/admin/js/invoice.js`);
