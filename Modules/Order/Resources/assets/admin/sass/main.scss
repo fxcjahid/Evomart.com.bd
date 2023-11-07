@@ -10,17 +10,17 @@
         top: 0;
         right: 0;
 
-        > a {
+        >a {
             float: right;
             padding: 6px 15px;
             color: #626060;
 
-            & + .tooltip .tooltip-inner {
+            &+.tooltip .tooltip-inner {
                 white-space: nowrap;
             }
         }
 
-        > form {
+        >form {
             float: right;
             margin-right: 5px;
 
@@ -28,7 +28,7 @@
                 padding: 6px 12px;
                 color: #626060;
 
-                & + .tooltip .tooltip-inner {
+                &+.tooltip .tooltip-inner {
                     white-space: nowrap;
                 }
             }
@@ -54,7 +54,7 @@
     .table {
         margin: 0;
 
-        > tbody > tr > td {
+        >tbody>tr>td {
             border: none;
         }
     }
@@ -82,7 +82,7 @@
                 border-bottom: none;
             }
 
-            > td {
+            >td {
                 font-size: 16px;
                 padding-top: 16px;
                 padding-bottom: 16px;
@@ -91,10 +91,6 @@
 
                 &:first-child {
                     min-width: 250px;
-                }
-
-                &:last-child {
-                    font-weight: 500;
                 }
             }
 
@@ -125,7 +121,7 @@
     .form-group {
         overflow: hidden;
 
-        > label {
+        >label {
             display: block;
         }
     }
@@ -140,7 +136,7 @@
     .account-information .table-responsive {
         margin-left: -8px;
 
-        tr > td:first-child {
+        tr>td:first-child {
             font-family: "Open Sans", sans-serif;
             font-weight: 600;
             white-space: nowrap;
@@ -168,15 +164,15 @@
         width: 300px;
         margin: 15px 15px 0 0;
 
-        tbody > tr {
-            > td {
+        tbody>tr {
+            >td {
                 font-family: "Roboto", sans-serif !important;
                 font-weight: 400 !important;
                 font-size: 17px;
                 padding: 5px 8px;
             }
 
-            &:last-child > td {
+            &:last-child>td {
                 font-family: "Roboto", sans-serif;
                 font-weight: 500 !important;
                 border-top: 1px solid #e9e9e9;
@@ -192,6 +188,7 @@
 
 @media screen and (max-width: 991px) {
     .order-wrapper {
+
         .account-information,
         .shipping-address,
         .handling-information {
@@ -203,7 +200,7 @@
 @media screen and (max-width: 767px) {
     .order-wrapper {
         .table {
-            > tbody > tr > td {
+            >tbody>tr>td {
                 white-space: inherit;
             }
         }

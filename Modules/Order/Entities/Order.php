@@ -2,35 +2,36 @@
 
 namespace Modules\Order\Entities;
 
-use Modules\Cart\CartTax;
-use Modules\Cart\CartItem;
-use Modules\Support\Money;
-use Modules\Support\State;
-use Modules\Support\Country;
-use Modules\Media\Entities\File;
-use Modules\Tax\Entities\TaxRate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Modules\Order\OrderCollection;
+use Modules\Cart\CartItem;
+use Modules\Cart\CartTax;
 use Modules\Coupon\Entities\Coupon;
+use Modules\Media\Entities\File;
 use Modules\Order\Admin\OrderTable;
-use Modules\Support\Eloquent\Model;
+use Modules\Order\OrderCollection;
 use Modules\Payment\Facades\Gateway;
 use Modules\Payment\HasTransactionReference;
 use Modules\Shipping\Facades\ShippingMethod;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Support\Country;
+use Modules\Support\Eloquent\Model;
+use Modules\Support\Money;
+use Modules\Support\State;
+use Modules\Tax\Entities\TaxRate;
 use Modules\Transaction\Entities\Transaction;
 
 class Order extends Model
 {
     use SoftDeletes;
 
-    const CANCELED = 'canceled';
-    const COMPLETED = 'completed';
-    const ON_HOLD = 'on_hold';
-    const PENDING = 'pending';
+    const CANCELED        = 'canceled';
+    const COMPLETED       = 'completed';
+    const ON_HOLD         = 'on_hold';
+    const PENDING         = 'pending';
     const PENDING_PAYMENT = 'pending_payment';
-    const PROCESSING = 'processing';
-    const REFUNDED = 'refunded';
+    const PROCESSING      = 'processing';
+    const REFUNDED        = 'refunded';
+    const FAILED          = 'failed';
 
     /**
      * The attributes that aren't mass assignable.
@@ -64,6 +65,16 @@ class Order extends Model
     public function hasCoupon()
     {
         return !is_null($this->coupon);
+    }
+
+    public function hasDiscount()
+    {
+        return !is_null($this->discount);
+    }
+
+    public function hasAdvancePayment()
+    {
+        return !is_null($this->advance_pay);
     }
 
     public function totalTax()
@@ -116,7 +127,7 @@ class Order extends Model
     private function dataForChart(OrderCollection $orders)
     {
         return [
-            'total' => $orders->sumTotal(),
+            'total'        => $orders->sumTotal(),
             'total_orders' => $orders->count(),
         ];
     }
@@ -165,6 +176,11 @@ class Order extends Model
         return Money::inDefaultCurrency($discount);
     }
 
+    public function getAdvancePayAttribute($advance_pay)
+    {
+        return Money::inDefaultCurrency($advance_pay);
+    }
+
     public function getTaxAttribute($tax)
     {
         return Money::inDefaultCurrency($tax);
@@ -173,6 +189,11 @@ class Order extends Model
     public function getTotalAttribute($total)
     {
         return Money::inDefaultCurrency($total);
+    }
+
+    public function getDueAmountAttribute($due)
+    {
+        return Money::inDefaultCurrency($due);
     }
 
     /**
@@ -244,7 +265,7 @@ class Order extends Model
         $orderProduct = $this->products()->create([
             'product_id' => $cartItem->product->id,
             'unit_price' => $cartItem->unitPrice()->amount(),
-            'qty' => $cartItem->qty,
+            'qty'        => $cartItem->qty,
             'line_total' => $cartItem->total()->amount(),
         ]);
 
@@ -282,7 +303,7 @@ class Order extends Model
      */
     public function table()
     {
-        $query = $this->newQuery()->select(['id', 'customer_first_name', 'customer_last_name', 'customer_email', 'currency', 'total', 'status', 'created_at']);
+        $query = $this->newQuery()->select(['id', 'customer_first_name', 'customer_last_name', 'customer_phone', 'currency', 'total', 'status', 'created_at']);
 
         return new OrderTable($query);
     }

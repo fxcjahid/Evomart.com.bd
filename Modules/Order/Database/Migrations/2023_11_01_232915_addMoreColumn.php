@@ -16,6 +16,7 @@ class AddMoreColumn extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('customer_name')->nullable()->after('customer_phone');
             $table->string('courier_name')->nullable()->after('shipping_country');
+            $table->boolean('same_address')->nullable()->after('shipping_country');
             $table->string('create_by')->nullable()->after('shipping_country');
             $table->string('creator_id')->nullable()->after('shipping_country');
             $table->decimal('advance_pay', 18, 4)->unsigned()->after('discount');

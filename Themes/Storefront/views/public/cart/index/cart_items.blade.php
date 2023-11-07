@@ -19,20 +19,13 @@
             <tr v-for="cartItem in cart.items" :key="cartItem.id">
                 <td>
                     <div class="product-image">
-                        <img
-                            :src="baseImage(cartItem.product)"
-                            :class="{ 'image-placeholder': ! hasBaseImage(cartItem.product) }"
-                            alt="product image"
-                        >
+                        <img :src="baseImage(cartItem.product)"
+                            :class="{ 'image-placeholder': !hasBaseImage(cartItem.product) }" alt="product image">
                     </div>
                 </td>
 
                 <td>
-                    <a
-                        :href="productUrl(cartItem.product)"
-                        class="product-name"
-                        v-text="cartItem.product.name"
-                    >
+                    <a :href="productUrl(cartItem.product)" class="product-name" v-text="cartItem.product.name">
                     </a>
 
                     <ul class="list-inline product-options" v-cloak>
@@ -53,20 +46,17 @@
 
                     <div class="number-picker">
                         <div class="input-group-quantity">
-                            <button type="button" class="btn btn-number btn-minus" data-type="minus" :disabled="cartItem.qty == 1">
+                            <button type="button" class="btn btn-number btn-minus" data-type="minus"
+                                :disabled="cartItem.qty == 1">
                                 <i class="las la-angle-left"></i>
                             </button>
 
-                            <input
-                                type="text"
-                                :value="cartItem.qty"
-                                min="1"
+                            <input type="text" :value="cartItem.qty" min="1"
                                 :max="cartItem.product.manage_stock ? cartItem.product.qty : ''"
                                 class="form-control input-number input-quantity"
                                 @input="updateQuantity(cartItem, $event.target.value)"
                                 @keydown.up="updateQuantity(cartItem, cartItem.qty + 1)"
-                                @keydown.down="updateQuantity(cartItem, cartItem.qty - 1)"
-                            >
+                                @keydown.down="updateQuantity(cartItem, cartItem.qty - 1)">
 
                             <button type="button" class="btn btn-number btn-plus" data-type="plus">
                                 <i class="las la-angle-right"></i>

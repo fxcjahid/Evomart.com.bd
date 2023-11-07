@@ -79,13 +79,21 @@ class InvoiceService
 
             'billing_first_name'  => $firstName,
             'billing_last_name'   => $lastName,
+            'billing_address_1'   => $request->customer_address,
+            'billing_city'        => $request->shipping_city,
+            'billing_cost'        => $request->shipping_cost,
+            'billing_method'      => $request->shipping_method,
 
             'shipping_first_name' => $firstName,
             'shipping_last_name'  => $lastName,
+            'shipping_address_1'  => $request->customer_address,
+            'shipping_city'       => $request->shipping_city,
+            'shipping_cost'       => $request->shipping_cost,
+            'shipping_method'     => $request->shipping_method,
+
+            'same_address'        => true,
 
             'courier_name'        => $request->courier_name,
-            'billing_address_1'   => $request->customer_address,
-
             'create_by'           => auth()->user()->fullname,
             'creator_id'          => auth()->user()->id,
 
@@ -94,9 +102,6 @@ class InvoiceService
             'due_amount'          => $request->due,
             'total'               => $request->total,
             'sub_total'           => $request->sub_total,
-            'shipping_city'       => $request->shipping_city,
-            'shipping_cost'       => $request->shipping_cost,
-            'shipping_method'     => $request->shipping_method,
             'payment_method'      => $request->payment_method,
             'currency'            => currency(),
             'currency_rate'       => CurrencyRate::for(currency()),

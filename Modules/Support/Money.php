@@ -2,11 +2,11 @@
 
 namespace Modules\Support;
 
-use NumberFormatter;
-use JsonSerializable;
 use InvalidArgumentException;
+use JsonSerializable;
 use Modules\Currency\Currency;
 use Modules\Currency\Entities\CurrencyRate;
+use NumberFormatter;
 
 class Money implements JsonSerializable
 {
@@ -15,7 +15,7 @@ class Money implements JsonSerializable
 
     public function __construct($amount, $currency)
     {
-        $this->amount = $amount;
+        $this->amount   = $amount;
         $this->currency = $currency;
     }
 
@@ -118,7 +118,7 @@ class Money implements JsonSerializable
 
     public function isNotSameCurrency($other)
     {
-        return ! $this->isSameCurrency($other);
+        return !$this->isSameCurrency($other);
     }
 
     private function assertSameCurrency($other)
@@ -179,7 +179,7 @@ class Money implements JsonSerializable
     public function format($currency = null, $locale = null)
     {
         $currency = $currency ?: currency();
-        $locale = $locale ?: locale();
+        $locale   = $locale ?: locale();
 
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
 
@@ -188,7 +188,6 @@ class Money implements JsonSerializable
         /**
          * Fix: Hungarian Forint outputs wrong currency format.
          *
-         * @see https://github.com/MehediDracula/Evomart/issues/18
          */
         if (currency() === 'HUF') {
             $amount = str_replace(',00', '', $amount);
@@ -200,9 +199,9 @@ class Money implements JsonSerializable
     public function toArray()
     {
         return [
-            'amount' => $this->amount,
+            'amount'    => $this->amount,
             'formatted' => $this->format(),
-            'currency' => $this->currency,
+            'currency'  => $this->currency,
         ];
     }
 

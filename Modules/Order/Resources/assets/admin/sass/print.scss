@@ -338,10 +338,12 @@ table {
 
 .invoice-header {
     .store-name {
-        height: 128px;
         width: 100%;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
     }
 
     .title {
@@ -381,8 +383,15 @@ table {
     }
 }
 
+.cart-list .table-responsive td:last-child,
+.cart-list .table-responsive th:last-child,
+.cart-list .table-responsive td:nth-child(2) {
+    text-align: center;
+}
+
 .invoice-body .invoice-details {
     margin-top: 25px;
+    margin-bottom: 20px;
 }
 
 .invoice-details h5,

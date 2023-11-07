@@ -9,9 +9,8 @@
                         <thead>
                             <tr>
                                 <th>{{ trans('order::orders.product') }}</th>
-                                <th>{{ trans('order::orders.unit_price') }}</th>
                                 <th>{{ trans('order::orders.quantity') }}</th>
-                                <th>{{ trans('order::orders.line_total') }}</th>
+                                <th>{{ trans('order::orders.unit_price') }}</th>
                             </tr>
                         </thead>
 
@@ -22,7 +21,8 @@
                                         @if ($product->trashed())
                                             {{ $product->name }}
                                         @else
-                                            <a href="{{ route('admin.products.edit', $product->product->id) }}">{{ $product->name }}</a>
+                                            <a
+                                                href="{{ route('admin.products.edit', $product->product->id) }}">{{ $product->name }}</a>
                                         @endif
 
                                         @if ($product->hasAnyOption())
@@ -43,15 +43,12 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        {{ $product->unit_price->format() }}
-                                    </td>
-
                                     <td>{{ $product->qty }}</td>
 
                                     <td>
-                                        {{ $product->line_total->format() }}
+                                        {{ $product->unit_price->amount() }}
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
