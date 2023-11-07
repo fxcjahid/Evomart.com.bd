@@ -196,6 +196,25 @@ class Product extends Model
         return $this->belongsToMany(static::class, 'related_products', 'product_id', 'related_product_id');
     }
 
+    public function relatedProductsByCategory($categories)
+    {
+
+        if (!$categories->categories->isEmpty()) {
+
+            $categoryIds = $categories->categories->pluck('id')->all();
+
+        } else {
+            return;
+        }
+
+        $results = Product::where('id', '!=', $this->id) // exclude same product
+            ->join('product_categories', 'products.id', '=', 'product_categories.product_id')
+            ->whereIn('product_categories.category_id', $categoryIds);
+
+        return $results;
+
+    }
+
     public function upSellProducts()
     {
         return $this->belongsToMany(static::class, 'up_sell_products', 'product_id', 'up_sell_product_id');
