@@ -338,13 +338,14 @@ table {
 
 .invoice-header {
     .store-name {
-        width: 100%;
+        max-width: 360px;
         display: flex;
-        flex-direction: column;
         justify-content: flex-start;
-        align-items: stretch;
-        gap: 3px;
+        gap: 5px;
         text-align: right;
+        flex-direction: column;
+        align-content: flex-end;
+        align-items: flex-end;
     }
 
     .title {
