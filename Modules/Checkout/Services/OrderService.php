@@ -12,8 +12,10 @@ use Modules\FlashSale\Entities\FlashSale;
 use Modules\Order\Entities\Order;
 use Modules\Shipping\Facades\ShippingMethod;
 
-class OrderService {
-    public function create($request) {
+class OrderService
+{
+    public function create($request)
+    {
 
         $this->mergeShippingAddress($request);
         $this->saveAddress($request);
@@ -29,13 +31,15 @@ class OrderService {
         });
     }
 
-    private function mergeShippingAddress($request) {
+    private function mergeShippingAddress($request)
+    {
         $request->merge([
             'shipping' => $request->ship_to_a_different_address ? $request->shipping : $request->billing,
         ]);
     }
 
-    private function saveAddress($request) {
+    private function saveAddress($request)
+    {
         if (auth()->guest()) {
             return;
         }
@@ -57,7 +61,8 @@ class OrderService {
         }
     }
 
-    private function extractAddress($data) {
+    private function extractAddress($data)
+    {
         return [
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
@@ -70,7 +75,8 @@ class OrderService {
         ];
     }
 
-    private function makeDefaultAddress(Address $address) {
+    private function makeDefaultAddress(Address $address)
+    {
         if (
             auth()
             ->user()
@@ -86,13 +92,15 @@ class OrderService {
         ]);
     }
 
-    private function addShippingMethodToCart($request) {
+    private function addShippingMethodToCart($request)
+    {
         if (!Cart::allItemsAreVirtual() && !Cart::hasShippingMethod()) {
             Cart::addShippingMethod(ShippingMethod::get($request->shipping_method));
         }
     }
 
-    private function store($request) {
+    private function store($request)
+    {
         return Order::create([
             'customer_id'         => auth()->id(),
             'customer_first_name' => $request->first_name ?? $request->billing['first_name'],
@@ -123,6 +131,8 @@ class OrderService {
             'shipping_cost'       => Cart::shippingCost()->amount(),
             'coupon_id'           => Cart::coupon()->id(),
             'discount'            => Cart::discount()->amount(),
+            'advance_pay'         => 0.00,
+            'due_amount'          => Cart::total()->amount(),
             'total'               => Cart::total()->amount(),
             'payment_method'      => $request->payment_method,
             'currency'            => currency(),
@@ -133,19 +143,22 @@ class OrderService {
         ]);
     }
 
-    private function storeOrderProducts(Order $order) {
+    private function storeOrderProducts(Order $order)
+    {
         Cart::items()->each(function (CartItem $cartItem) use ($order) {
             $order->storeProducts($cartItem);
         });
     }
 
-    private function storeOrderDownloads(Order $order) {
+    private function storeOrderDownloads(Order $order)
+    {
         Cart::items()->each(function (CartItem $cartItem) use ($order) {
             $order->storeDownloads($cartItem);
         });
     }
 
-    private function storeFlashSaleProductOrders(Order $order) {
+    private function storeFlashSaleProductOrders(Order $order)
+    {
         Cart::items()->each(function (CartItem $cartItem) use ($order) {
             if (!FlashSale::contains($cartItem->product)) {
                 return;
@@ -162,21 +175,25 @@ class OrderService {
         });
     }
 
-    private function incrementCouponUsage() {
+    private function incrementCouponUsage()
+    {
         Cart::coupon()->usedOnce();
     }
 
-    private function attachTaxes(Order $order) {
+    private function attachTaxes(Order $order)
+    {
         Cart::taxes()->each(function (CartTax $cartTax) use ($order) {
             $order->attachTax($cartTax);
         });
     }
 
-    public function reduceStock() {
+    public function reduceStock()
+    {
         Cart::reduceStock();
     }
 
-    public function delete(Order $order) {
+    public function delete(Order $order)
+    {
         $order->delete();
 
         Cart::restoreStock();

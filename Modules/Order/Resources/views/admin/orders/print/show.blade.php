@@ -222,6 +222,12 @@
                         </div>
                     </div>
 
+                    <div class="editable pull-left">
+                        <div contenteditable="true">
+                            Apply terms & condition *
+                        </div>
+                    </div>
+
                     <div class="total pull-right">
                         <table class="table">
                             <tbody>
@@ -300,7 +306,7 @@
     </div>
 
     <script>
-         window.print();
+        // window.print();
     </script>
 </body>
 

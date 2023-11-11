@@ -74,7 +74,7 @@ class Order extends Model
 
     public function hasAdvancePayment()
     {
-        return !is_null($this->advance_pay);
+        return $this->advance_pay;
     }
 
     public function totalTax()
