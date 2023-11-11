@@ -80,9 +80,7 @@ class InvoiceService
             'billing_first_name'  => $firstName,
             'billing_last_name'   => $lastName,
             'billing_address_1'   => $request->customer_address,
-            'billing_city'        => $request->shipping_city,
-            'billing_cost'        => $request->shipping_cost,
-            'billing_method'      => $request->shipping_method,
+            'billing_city'        => $request->shipping_city, 
 
             'shipping_first_name' => $firstName,
             'shipping_last_name'  => $lastName,

@@ -19,8 +19,8 @@ class AddMoreColumn extends Migration
             $table->boolean('same_address')->nullable()->after('shipping_country');
             $table->string('create_by')->nullable()->after('shipping_country');
             $table->string('creator_id')->nullable()->after('shipping_country');
-            $table->decimal('advance_pay', 18, 4)->unsigned()->after('discount');
-            $table->decimal('due_amount', 18, 4)->unsigned()->after('discount');
+            $table->decimal('advance_pay', 18, 4)->nullable()->unsigned()->after('discount');
+            $table->decimal('due_amount', 18, 4)->nullable()->unsigned()->after('discount');
         });
     }
 
