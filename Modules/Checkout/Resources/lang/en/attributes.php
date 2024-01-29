@@ -4,8 +4,9 @@ return [
     'billing' => [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
-        'address_1' => 'Address Line 1',
+        'address_1' => 'Address',
         'address_2' => 'Address Line 2 (optional)',
+        'phone' => 'Phone',
         'city' => 'City',
         'zip' => 'Postcode / ZIP',
         'country' => 'Country',

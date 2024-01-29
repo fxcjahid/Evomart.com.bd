@@ -1,5 +1,7 @@
 <div class="billing-details">
-    <h4 class="section-title">{{ trans('storefront::checkout.billing_details') }}</h4>
+    <h4 class="section-title">
+        {{ trans('storefront::checkout.delivery_details') }}
+    </h4>
 
     <div class="select-address" v-if="hasAddress" v-cloak>
         <div class="form-group">
@@ -61,26 +63,35 @@
 
                 <div class="col-md-18">
                     <div class="form-group">
+                        <label for="billing-phone">
+                            Phone <span>*</span>
+                        </label>
+
+                        <input type="text" name="billing[phone]" v-model="form.billing.phone" id="billing-phone"
+                            class="form-control">
+
+                        <span class="error-message" v-if="errors.has('billing.phone')"
+                            v-text="errors.get('billing.phone')">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-18">
+                    <div class="form-group">
                         <label for="billing-address-1">
-                            {{ trans('checkout::attributes.street_address') }}<span>*</span>
+                            Address <span>*</span>
                         </label>
 
                         <input type="text" name="billing[address_1]" v-model="form.billing.address_1"
-                            id="billing-address-1" class="form-control"
-                            placeholder="{{ trans('checkout::attributes.billing.address_1') }}">
+                            id="billing-address-1" class="form-control">
 
                         <span class="error-message" v-if="errors.has('billing.address_1')"
                             v-text="errors.get('billing.address_1')">
                         </span>
                     </div>
-
-                    <div class="form-group">
-                        <input type="text" name="billing[address_2]" v-model="form.billing.address_2"
-                            class="form-control" placeholder="{{ trans('checkout::attributes.billing.address_2') }}">
-                    </div>
                 </div>
 
-                <div class="col-md-9">
+                {{-- <div class="col-md-9">
                     <div class="form-group">
                         <label for="billing-city">
                             {{ trans('checkout::attributes.billing.city') }}<span>*</span>
@@ -150,7 +161,7 @@
                             v-text="errors.get('billing.state')">
                         </span>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
