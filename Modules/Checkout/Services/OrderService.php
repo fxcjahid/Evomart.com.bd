@@ -106,7 +106,7 @@ class OrderService
             'customer_first_name' => $request->first_name ?? $request->billing['first_name'],
             'customer_last_name' => $request->last_name ?? $request->billing['last_name'],
             'customer_email' => $request->customer_email ?? null,
-            'customer_phone' => $request->billing['phone'],
+            'customer_phone' => $request->billing['phone'] ?? $request->customer_phone,
 
             'billing_first_name' => $request->first_name ?? $request->billing['first_name'],
             'billing_last_name' => $request->last_name ?? $request->billing['last_name'],
