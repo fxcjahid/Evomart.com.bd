@@ -43,7 +43,6 @@
 
                 <td>
                     <label>{{ trans('storefront::cart.table.quantity:') }}</label>
-                    <span v-html="cartItem"></span>
                     <div class="number-picker">
                         <div class="input-group-quantity">
                             <button type="button" class="btn btn-number btn-minus" data-type="minus"

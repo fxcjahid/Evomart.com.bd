@@ -65,6 +65,13 @@
                                             <div class="right">
                                                 <span class="product-price"
                                                     v-html="cartItem.unitPrice.inCurrentCurrency.formatted"></span>
+
+                                                <ul class="list-inline product-options" v-cloak>
+                                                    <li v-for="option in cartItem.options">
+                                                        <label>@{{ option.name }}:</label> @{{ optionValues(option) }}
+                                                    </li>
+                                                </ul>
+
                                                 <div class="number-picker">
                                                     <label
                                                         for="qty">{{ trans('storefront::product.quantity') }}</label>
@@ -89,7 +96,8 @@
                                                     </div>
                                                 </div>
 
-                                                <button class="btn-remove" @click="remove(cartItem)">
+                                                <button class="btn-remove" title="remove item"
+                                                    v-if="cartItem.length > 1" @click="remove(cartItem)">
                                                     <i class="las la-times"></i>
                                                 </button>
                                             </div>
@@ -99,21 +107,14 @@
                                 </ul>
                             </div>
 
-                            <div class="product-variants">
+                            <div class="product-variants" v-cloak>
                                 @foreach ($product->options as $option)
                                     @includeIf("public.products.show.custom_options.{$option->type}")
                                 @endforeach
                             </div>
 
-                            <div class="total-payment-form" :class="{ loading: loadingOrderSummary }" v-cloak>
+                            <div class="total-payment-form" :class="{ loading: loadingOrderSummary }">
                                 <div class="oder-summary-wrap">
-
-                                    <div class="sub-total-item">
-                                        <span>Sub Total</span>
-                                        <div class="product-price" v-html="price">
-                                            {!! $product->formatted_price !!}
-                                        </div>
-                                    </div>
 
                                     <div class="delivery-selection" v-if="hasShippingMethod" v-cloak>
                                         <span>Select delivery area</span>

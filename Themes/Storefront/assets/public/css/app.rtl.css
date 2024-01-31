@@ -27600,40 +27600,59 @@ textarea.form-control {
   padding: 50px 0;
 }
 .billing-details-section .number-picker {
+  display: inline-flex;
+  align-items: center;
+}
+.billing-details-section .number-picker label {
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.billing-details-section .number-picker .input-group-quantity {
   position: relative;
-  width: 57px;
+  margin-right: 20px;
 }
-.billing-details-section .number-picker .input-quantity {
-  height: auto;
-  padding: 0;
+.billing-details-section .number-picker .input-group-quantity .input-quantity {
+  width: 75px;
+  padding: 2px 2px 2px 37px;
   text-align: center;
-  border: none;
+  height: 37px;
+  font-size: 15px;
 }
-.billing-details-section .number-picker .btn-number {
+.billing-details-section .number-picker .input-group-quantity .input-quantity:focus {
+  outline: 0;
+  border-color: #ebebeb;
+}
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper {
   position: absolute;
-  padding: 0;
-  top: 50%;
-  background: #ffffff;
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
 }
-.billing-details-section .number-picker .btn-number:hover {
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number {
+  position: absolute;
+  left: 0;
+  width: 30px;
+  padding: 0;
+  line-height: 18px;
+  background: none;
+  border: 1px solid #ebebeb;
+  border-radius: 0;
+}
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number:hover {
   color: #0068e1;
   color: var(--color-primary);
 }
-.billing-details-section .number-picker .btn-number[disabled] {
-  opacity: 1;
-}
-.billing-details-section .number-picker .btn-number[disabled] > i {
-  opacity: 0.5;
-}
-.billing-details-section .number-picker .btn-number[disabled]:hover {
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number[disabled]:hover {
   color: #191919;
 }
-.billing-details-section .number-picker .btn-minus {
-  right: 0;
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-plus {
+  top: 0;
+  height: 19px;
+  border-top-left-radius: 2px;
 }
-.billing-details-section .number-picker .btn-plus {
-  left: 0;
+.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-minus {
+  top: 18px;
+  height: 19px;
+  border-bottom-left-radius: 2px;
 }
 
 .billing-details-form-outer {
@@ -27733,7 +27752,12 @@ textarea.form-control {
 .cart-product-item-wrap li {
   display: flex;
   border-bottom: 1px dashed #e0e0e0;
-  padding-bottom: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.cart-product-item-wrap li:last-child {
+  border-bottom: none;
+  padding-bottom: 10px;
 }
 
 .cart-product-item-left {
@@ -27743,13 +27767,20 @@ textarea.form-control {
 
 .cart-product-item-left img {
   width: 85px;
-  box-shadow: #d2d2d2 0px 2px 7px 0px;
+  box-shadow: #d1d1d1 0px 0px 3px 0px;
   border-radius: 4px;
 }
 
 .cart-product-item-right {
   display: block;
   width: 100%;
+}
+.cart-product-item-right .right {
+  display: flex;
+  align-items: center;
+}
+.cart-product-item-right .btn-remove {
+  margin-right: 10px;
 }
 
 .cart-product-item-right .left .cart-product-name {
