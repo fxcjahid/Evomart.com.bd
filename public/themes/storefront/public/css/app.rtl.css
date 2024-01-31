@@ -27600,67 +27600,89 @@ textarea.form-control {
   padding: 50px 0;
 }
 .billing-details-section .number-picker {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 10px;
-}
-.billing-details-section .number-picker label {
-  font-weight: 400;
-  margin-bottom: 0;
-}
-.billing-details-section .number-picker .input-group-quantity {
   position: relative;
-  margin-right: 20px;
+  width: 57px;
 }
-.billing-details-section .number-picker .input-group-quantity .input-quantity {
-  width: 80px;
-  text-align: center;
-  height: 40px;
-  padding: 10px 10px 10px 39px;
-}
-.billing-details-section .number-picker .input-group-quantity .input-quantity:focus {
-  outline: 0;
-  border-color: #ebebeb;
-}
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number {
-  position: absolute;
-  left: 0;
-  width: 30px;
+.billing-details-section .number-picker .input-quantity {
+  height: auto;
   padding: 0;
-  line-height: 18px;
-  background: none;
-  border: 1px solid #ebebeb;
-  border-radius: 0;
+  text-align: center;
+  border: none;
 }
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number:hover {
+.billing-details-section .number-picker .btn-number {
+  position: absolute;
+  padding: 0;
+  top: 50%;
+  background: #ffffff;
+  transform: translateY(-50%);
+}
+.billing-details-section .number-picker .btn-number:hover {
   color: #0068e1;
   color: var(--color-primary);
 }
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-number[disabled]:hover {
+.billing-details-section .number-picker .btn-number[disabled] {
+  opacity: 1;
+}
+.billing-details-section .number-picker .btn-number[disabled] > i {
+  opacity: 0.5;
+}
+.billing-details-section .number-picker .btn-number[disabled]:hover {
   color: #191919;
 }
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-plus {
-  top: 0;
-  height: 24px;
-  border-width: 0px 1px 1px 0px;
-  border-top-left-radius: 2px;
+.billing-details-section .number-picker .btn-minus {
+  right: 0;
 }
-.billing-details-section .number-picker .input-group-quantity .btn-wrapper .btn-minus {
-  top: 19px;
-  height: 19px;
-  border-width: 0px 1px 0px 0px;
-  border-bottom-left-radius: 2px;
+.billing-details-section .number-picker .btn-plus {
+  left: 0;
 }
 
 .billing-details-form-outer {
   background: #F8F8F8;
   padding: 25px;
   border-radius: 5px;
+}
+.billing-details-form-outer .form-group label,
+.billing-details-form-outer div > span {
+  font-weight: 400;
+}
+.billing-details-form-outer .form-group {
+  margin-top: 10px;
+}
+.billing-details-form-outer .form-group .form-radio {
+  display: flex;
+  justify-content: space-between;
+}
+.billing-details-form-outer .form-group .form-radio .price-amount {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-primary);
+}
+.billing-details-form-outer .order-summary-details {
+  padding: 5px 10px;
+  background: #ffffff;
+  margin: 0 0px 30px;
+  border-radius: 5px;
+}
+.billing-details-form-outer .order-summary-details .-subtotal-amount,
+.billing-details-form-outer .order-summary-details .-delivery-charge,
+.billing-details-form-outer .order-summary-details .-total-amount {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0px;
+}
+.billing-details-form-outer .order-summary-details .-total-amount:last-child {
+  border-top: 1px solid #ebebeb;
+  padding-bottom: 4px;
+}
+.billing-details-form-outer .order-summary-details .-total-amount:last-child label,
+.billing-details-form-outer .order-summary-details .-total-amount:last-child span {
+  font-weight: 500;
+}
+.billing-details-form-outer .order-summary-details label {
+  margin: 0;
 }
 
 .billing-details-title {
@@ -27703,6 +27725,15 @@ textarea.form-control {
   border-bottom: 1px solid #EEEEEE;
   padding-bottom: 20px;
   margin-bottom: 25px;
+}
+.cart-product-item-wrap ul,
+.cart-product-item-wrap li {
+  list-style: none;
+}
+.cart-product-item-wrap li {
+  display: flex;
+  border-bottom: 1px dashed #e0e0e0;
+  padding-bottom: 15px;
 }
 
 .cart-product-item-left {
@@ -27779,11 +27810,14 @@ textarea.form-control {
   outline: none;
 }
 
-.sub-total-wrap .sub-total-item {
+.oder-summary-wrap .sub-total-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+}
+.oder-summary-wrap .product-price {
+  font-weight: 400;
 }
 
 .sub-total-item.grand-total {
@@ -27804,18 +27838,17 @@ textarea.form-control {
 
 .order-place-btn-inner {
   width: 100%;
-  border: 1px solid #FF7E16;
-  background: #FF7E16;
+  border: 0;
+  background: var(--color-primary);
   padding: 12px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: #ffffff;
   border-radius: 5px;
+  margin-top: 5px;
 }
-
 .order-place-btn-inner:hover {
-  background: transparent;
-  color: #FF7E16;
+  background: var(--color-primary-hover);
 }
 
 .payment-items-wrap {
@@ -27823,6 +27856,8 @@ textarea.form-control {
   padding: 20px 25px;
   border-radius: 5px;
   position: relative;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .payment-items-wrap:before {
@@ -27843,8 +27878,11 @@ textarea.form-control {
   font-size: 14px;
   font-weight: 400;
 }
+.payment-items-wrap b {
+  font-weight: bold;
+}
 
-.sub-total-wrap .sub-total-item input {
+.oder-summary-wrap .sub-total-item input {
   border: none;
   background: transparent;
   text-align: left;
@@ -27854,7 +27892,7 @@ textarea.form-control {
   width: 100px;
 }
 
-.sub-total-wrap .sub-total-item input:focus-visible {
+.oder-summary-wrap .sub-total-item input:focus-visible {
   outline: none;
 }
 

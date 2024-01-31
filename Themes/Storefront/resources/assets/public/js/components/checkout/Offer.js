@@ -238,6 +238,67 @@ export default {
 				this.form.shipping =
 					this.addresses[this.form.shippingAddressId];
 			}
+		},
+		
+        optionValues(option) {
+            let values = [];
+
+            for (let value of option.values) {
+                values.push(value.label);
+            }
+
+            return values.join(', ');
+        },
+
+        updateQuantity(cartItem, qty) {
+            if (qty < 1 || this.exceedsMaxStock(cartItem, qty)) {
+                return;
+            }
+
+            if (isNaN(qty)) {
+                qty = 1;
+            }
+
+            this.loadingOrderSummary = true;
+
+            cartItem.qty = qty;
+
+            $.ajax({
+                method: 'PUT',
+                url: route('cart.items.update', { cartItemId: cartItem.id }),
+                data: { qty: qty || 1 },
+            }).then((cart) => {
+                store.updateCart(cart);
+            }).catch((xhr) => {
+                this.$notify(xhr.responseJSON.message);
+            }).always(() => {
+                this.loadingOrderSummary = false;
+            });
+        },
+
+        exceedsMaxStock(cartItem, qty) {
+            return cartItem.product.manage_stock && cartItem.product.qty < qty;
+        },
+
+        remove(cartItem) {
+            this.loadingOrderSummary = true;
+
+            store.removeCartItem(cartItem);
+
+            if (store.cartIsEmpty()) {
+                this.crossSellProducts = [];
+            }
+
+            $.ajax({
+                method: 'DELETE',
+                url: route('cart.items.destroy', { cartItemId: cartItem.id }),
+            }).then((cart) => {
+                store.updateCart(cart);
+            }).catch((xhr) => {
+                this.$notify(xhr.responseJSON.message);
+            }).always(() => {
+                this.loadingOrderSummary = false;
+            });
         },
         
         updatePrice() {
@@ -252,7 +313,70 @@ export default {
                     this.$notify(xhr.responseJSON.message);
                 });
             });
-        }, 
+		}, 
+		
+		
+        updateSelectTypeOptionValue(optionId, e) {
+            this.$set(this.cartItemForm.options, optionId, $(e.target).val());
+
+            this.errors.clear(`options.${optionId}`);
+        },
+
+        updateCheckboxTypeOptionValue(optionId, e) {
+            let values = $(e.target)
+                .parents('.variant-check')
+                .find('input[type="checkbox"]:checked')
+                .map((_, el) => {
+                    return el.value;
+                });
+
+            this.$set(this.cartItemForm.options, optionId, values.get());
+        },
+
+        customRadioTypeOptionValueIsActive(optionId, valueId) {
+            if (!this.cartItemForm.options.hasOwnProperty(optionId)) {
+                return false;
+            }
+
+            return this.cartItemForm.options[optionId] === valueId;
+        },
+
+        syncCustomRadioTypeOptionValue(optionId, valueId) {
+            if (this.customRadioTypeOptionValueIsActive(optionId, valueId)) {
+                this.$delete(this.cartItemForm.options, optionId);
+            } else {
+                this.$set(this.cartItemForm.options, optionId, valueId);
+
+                this.errors.clear(`options.${optionId}`);
+            }
+
+            this.updatePrice();
+        },
+
+        customCheckboxTypeOptionValueIsActive(optionId, valueId) {
+            if (!this.cartItemForm.options.hasOwnProperty(optionId)) {
+                this.$set(this.cartItemForm.options, optionId, []);
+
+                return false;
+            }
+
+            return this.cartItemForm.options[optionId].includes(valueId);
+        },
+
+        syncCustomCheckboxTypeOptionValue(optionId, valueId) {
+            if (this.customCheckboxTypeOptionValueIsActive(optionId, valueId)) {
+                this.cartItemForm.options[optionId].splice(
+                    this.cartItemForm.options[optionId].indexOf(valueId),
+                    1
+                );
+            } else {
+                this.cartItemForm.options[optionId].push(valueId);
+
+                this.errors.clear(`options.${optionId}`);
+            }
+
+            this.updatePrice();
+        },
 
 		changeBillingCity(city) {
 			this.$set(this.form.billing, "city", city);

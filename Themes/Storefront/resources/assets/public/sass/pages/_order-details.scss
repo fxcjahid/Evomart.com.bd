@@ -11,85 +11,113 @@
         border-bottom: 1px solid $border-color-lite;
     }
 }
- 
+
 .billing-details-section {
     padding: 50px 0;
 
     .number-picker {
-        display: inline-flex;
-        align-items: center; 
-        margin-top: 10px;
+        position: relative;
+        width: 57px;
 
-        label {
-            font-weight: 400;
-            margin-bottom: 0;
+        .input-quantity {
+            height: auto;
+            padding: 0;
+            text-align: center;
+            border: none;
         }
 
-        .input-group-quantity {
-            position: relative;
-            margin-left: 20px;
+        .btn-number {
+            position: absolute;
+            padding: 0;
+            top: 50%;
+            background: $color-white;
+            transform: translateY(-50%);
 
-            .input-quantity {
-                width: 80px;
-                text-align: center;
-                height: 40px;
-                padding: 10px 39px 10px 10px;
-
-                &:focus {
-                    outline: 0;
-                    border-color: $color-gray-lite;
-                }
+            &:hover {
+                color: $color-default;
+                color: var(--color-primary);
             }
 
-            .btn-wrapper {
-                position: absolute;
-                top: 0;
-                right: 0;
+            &[disabled] {
+                opacity: 1;
 
-                .btn-number {
-                    position: absolute;
-                    right: 0;
-                    width: 30px;
-                    padding: 0;
-                    line-height: 18px;
-                    background: none;
-                    border: 1px solid $color-gray-lite;
-                    border-radius: 0;
-
-                    &:hover {
-                        color: $color-default;
-                        color: var(--color-primary);
-                    }
-
-                    &[disabled] {
-                        &:hover {
-                            color: $color-black;
-                        }
-                    }
+                >i {
+                    opacity: 0.5;
                 }
 
-                .btn-plus {
-                    top: 0;
-                    height: 24px; 
-                    border-width: 0px 0px 1px 1px;
-                    border-top-right-radius: $radius-default;
-                }
-
-                .btn-minus {
-                    top: 19px;
-                    height: 19px; 
-                    border-width: 0px 0px 0px 1px;
-                    border-bottom-right-radius: $radius-default;
+                &:hover {
+                    color: $color-black;
                 }
             }
+        }
+
+        .btn-minus {
+            left: 0;
+        }
+
+        .btn-plus {
+            right: 0;
         }
     }
+
 }
 
 .billing-details-form-outer {
     background: #F8F8F8;
     padding: 25px;
     border-radius: 5px;
+
+    .form-group label,
+    div>span {
+        font-weight: 400;
+    }
+
+    .form-group {
+        margin-top: 10px;
+
+        .form-radio {
+            display: flex;
+            justify-content: space-between;
+
+            .price-amount {
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 24px;
+                color: var(--color-primary);
+            }
+        }
+    }
+
+    .order-summary-details {
+        padding: 5px 10px;
+        background: #ffffff;
+        margin: 0 0px 30px;
+        border-radius: 5px;
+
+        .-subtotal-amount,
+        .-delivery-charge,
+        .-total-amount {
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0px;
+        }
+
+        .-total-amount:last-child {
+            border-top: 1px solid #ebebeb;
+            padding-bottom: 4px;
+
+            label,
+            span {
+                font-weight: 500;
+            }
+        }
+
+        label {
+            margin: 0;
+        }
+    }
 }
 
 .billing-details-title {
@@ -132,6 +160,17 @@
     border-bottom: 1px solid #EEEEEE;
     padding-bottom: 20px;
     margin-bottom: 25px;
+
+    ul,
+    li {
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        border-bottom: 1px dashed #e0e0e0;
+        padding-bottom: 15px;
+    }
 }
 
 .cart-product-item-left {
@@ -146,7 +185,7 @@
 }
 
 .cart-product-item-right {
-    display: block; 
+    display: block;
     width: 100%;
 }
 
@@ -208,11 +247,17 @@
     outline: none;
 }
 
-.sub-total-wrap .sub-total-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.oder-summary-wrap {
+    .sub-total-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .product-price {
+        font-weight: 400;
+    }
 }
 
 .sub-total-item.grand-total {
@@ -233,25 +278,28 @@
 
 .order-place-btn-inner {
     width: 100%;
-    border: 1px solid #FF7E16;
-    background: #FF7E16;
+    border: 0;
+    background: var(--color-primary);
     padding: 12px 0;
     font-size: 18px;
     font-weight: 500;
-    color: #fff;
+    color: #ffffff;
     border-radius: 5px;
+    margin-top: 5px;
+
+    &:hover {
+        background: var(--color-primary-hover);
+    }
 }
 
-.order-place-btn-inner:hover {
-    background: transparent;
-    color: #FF7E16;
-}
 
 .payment-items-wrap {
     background: #fff;
     padding: 20px 25px;
     border-radius: 5px;
     position: relative;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .payment-items-wrap:before {
@@ -267,13 +315,19 @@
     margin: -1em 0 0 2em;
 }
 
-.payment-items-wrap p {
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
+.payment-items-wrap {
+    p {
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    b {
+        font-weight: bold;
+    }
 }
 
-.sub-total-wrap .sub-total-item input {
+.oder-summary-wrap .sub-total-item input {
     border: none;
     background: transparent;
     text-align: right;
@@ -283,7 +337,7 @@
     width: 100px;
 }
 
-.sub-total-wrap .sub-total-item input:focus-visible {
+.oder-summary-wrap .sub-total-item input:focus-visible {
     outline: none;
 }
 

@@ -72,12 +72,15 @@ class ProductController extends Controller
      * Show the specified resource.
      *
      * @param string $slug
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function offerProduct($slug)
     {
         $product = Product::findBySlug($slug);
         $review  = $this->getReviewData($product);
+
+        /** Create Add To Card Instance */
+        Cart::store(productId: $product->id, qty: 1, options: []);
 
         $cart           = Cart::instance();
         $gateways       = Gateway::all();

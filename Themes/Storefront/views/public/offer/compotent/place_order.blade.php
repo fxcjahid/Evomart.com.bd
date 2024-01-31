@@ -4,7 +4,7 @@
             customer-phone="{{ auth()->user()->phone ?? null }}" :default-address="{{ $defaultAddress }}"
             :addresses="{{ $addresses }}" :gateways="{{ $gateways }}" inline-template>
 
-            <form @submit.prevent="addToCart" @input="errors.clear($event.target.name)" @change="updatePrice"
+            <form @submit.prevent="placeOrder" @input="errors.clear($event.target.name)" @change="updatePrice"
                 @nice-select-updated="updatePrice">
 
 
@@ -49,40 +49,54 @@
                             <h4 class="billing-details-title">
                                 আপনার পণ্য
                             </h4>
-                            <div class="cart-product-item-wrap">
-                                <div class="cart-product-item-left">
-                                    <img src="https://efadavasozshop.com/product/69.jpg" alt="image"
-                                        class="hoverZoomLink">
-                                </div>
-                                <div class="cart-product-item-right">
-                                    <div class="left">
-                                        <h4 class="cart-product-name">
-                                            {{ $product->name }}
-                                        </h4>
-                                    </div>
-                                    <div class="right">
-                                        <div class="number-picker">
-                                            <label for="qty">{{ trans('storefront::product.quantity') }}</label>
+                            <div class="cart-product-item-wrap" v-cloak>
+                                <ul>
+                                    <li v-for="cartItem in cart.items" :key="cartItem.id">
 
-                                            <div class="input-group-quantity">
-                                                <input type="text" :value="cartItemForm.qty" min="1"
-                                                    max="{{ $product->manage_stock ? $product->qty : '' }}"
-                                                    id="qty" class="form-control input-number input-quantity"
-                                                    @input="updateQuantity($event.target.value)"
-                                                    @keydown.up="updateQuantity(cartItemForm.qty + 1)"
-                                                    @keydown.down="updateQuantity(cartItemForm.qty - 1)">
+                                        <div class="cart-product-item-left">
+                                            <img :src="baseImage(cartItem.product)"
+                                                :class="{ 'image-placeholder': !hasBaseImage(cartItem.product) }"
+                                                alt="product image">
+                                        </div>
+                                        <div class="cart-product-item-right">
+                                            <div class="left">
+                                                <h3 class="cart-product-name" v-text="cartItem.product.name"></h3>
+                                            </div>
+                                            <div class="right">
+                                                <span class="product-price"
+                                                    v-html="cartItem.unitPrice.inCurrentCurrency.formatted"></span>
+                                                <div class="number-picker">
+                                                    <label
+                                                        for="qty">{{ trans('storefront::product.quantity') }}</label>
 
-                                                <span class="btn-wrapper">
-                                                    <button type="button" class="btn btn-number btn-plus"
-                                                        data-type="plus">
-                                                        + </button>
-                                                    <button type="button" class="btn btn-number btn-minus"
-                                                        data-type="minus" disabled> - </button>
-                                                </span>
+                                                    <div class="input-group-quantity">
+                                                        <input type="text" :value="cartItem.qty" min="1"
+                                                            max="{{ $product->manage_stock ? $product->qty : '' }}"
+                                                            id="qty"
+                                                            class="form-control input-number input-quantity"
+                                                            @input="updateQuantity(cartItem, $event.target.value)"
+                                                            @keydown.up="updateQuantity(cartItem, cartItem.qty + 1)"
+                                                            @keydown.down="updateQuantity(cartItem, cartItem.qty - 1)">
+
+
+                                                        <span class="btn-wrapper">
+                                                            <button type="button" class="btn btn-number btn-plus"
+                                                                data-type="plus">
+                                                                + </button>
+                                                            <button type="button" class="btn btn-number btn-minus"
+                                                                data-type="minus" disabled> - </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <button class="btn-remove" @click="remove(cartItem)">
+                                                    <i class="las la-times"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+
+                                    </li>
+                                </ul>
                             </div>
 
                             <div class="product-variants">
@@ -91,18 +105,18 @@
                                 @endforeach
                             </div>
 
-                            <div class="total-payment-form">
-                                <div class="sub-total-wrap">
-                                    <div class="sub-total-item">
-                                        <strong>Sub Total</strong>
+                            <div class="total-payment-form" :class="{ loading: loadingOrderSummary }" v-cloak>
+                                <div class="oder-summary-wrap">
 
+                                    <div class="sub-total-item">
+                                        <span>Sub Total</span>
                                         <div class="product-price" v-html="price">
                                             {!! $product->formatted_price !!}
                                         </div>
                                     </div>
 
                                     <div class="delivery-selection" v-if="hasShippingMethod" v-cloak>
-                                        <strong>Select delivery area</strong>
+                                        <span>Select delivery area</span>
                                         <div class="form-group">
                                             <div class="form-radio"
                                                 v-for="shippingMethod in cart.availableShippingMethods">
@@ -111,7 +125,8 @@
                                                     :id="shippingMethod.name"
                                                     @change="updateShippingMethod(shippingMethod.name)">
 
-                                                <label :for="shippingMethod.name" v-text="shippingMethod.label"></label>
+                                                <label :for="shippingMethod.name"
+                                                    v-text="shippingMethod.label"></label>
 
                                                 <span class="price-amount"
                                                     v-html="shippingMethod.cost.inCurrentCurrency.formatted">
@@ -120,19 +135,24 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="sub-total-item">
-                                        <strong>Shipping</strong>
-                                        <span>100৳</span>
-                                    </div>
-                                    <div class="sub-total-item grand-total">
-                                        <strong>Total(Tk)</strong>
-
-                                        <div>
-                                            <input type="text" name="total" id="total" value="600"
-                                                readonly="">৳
+                                    <div class="order-summary-details" v-cloak>
+                                        <div class="-subtotal-amount">
+                                            <label>{{ trans('storefront::cart.subtotal') }}</label>
+                                            <span class="price-amount"
+                                                v-html="cart.subTotal.inCurrentCurrency.formatted"></span>
+                                        </div>
+                                        <div class="-delivery-charge">
+                                            <label>Delivery Charge</label>
+                                            <span class="price-amount"
+                                                v-html="cart.shippingCost.inCurrentCurrency.formatted"></span>
+                                        </div>
+                                        <div class="-total-amount">
+                                            <label class="bold">{{ trans('storefront::cart.total') }}</label>
+                                            <span class="price-amount bold"
+                                                v-html="cart.total.inCurrentCurrency.formatted"></span>
                                         </div>
                                     </div>
+
                                 </div>
                                 <h6 class="payment-item-title">
                                     Select Payment Method
@@ -140,12 +160,13 @@
                                 <div class="payment-items-wrap">
                                     <p>
                                         আমরা দিচ্ছি <b>ক্যাশ অন ডেলিভারিতে হোম ডেলিভারি</b> তাই পণ্য হাতে পেয়ে দেখে পণ্য
-                                        রিসিভ করবেন এতে করে আপনার প্রতারিত হবার চান্স নেই।<br>
+                                        রিসিভ করবেন এতে করে আপনার প্রতারিত হবার চান্স নেই।<br /><br />
                                         <b>বিশেষ অনুরোধঃ</b> অনুগ্রহ করে অর্ডারকৃত প্রোডাক্ট টি রিসিভ করবেন।
                                     </p>
                                 </div>
 
-                                <button type="submit" class="order-place-btn-inner">
+                                <button type="submit" class="order-place-btn-inner"
+                                    :class="{ 'btn-loading': placingOrder }" v-cloak>
                                     Place Order
                                 </button>
                             </div>
