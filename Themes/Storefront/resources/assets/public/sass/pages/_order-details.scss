@@ -1,6 +1,6 @@
 @import 'order-details/_order-details-top',
-        'order-details/_order-details-middle',
-        'order-details/_order-details-bottom';
+'order-details/_order-details-middle',
+'order-details/_order-details-bottom';
 
 .order-details-wrap {
     margin-top: 50px;
@@ -11,3 +11,280 @@
         border-bottom: 1px solid $border-color-lite;
     }
 }
+ 
+.billing-details-section {
+    padding: 50px 0;
+
+    .number-picker {
+        display: inline-flex;
+        align-items: center; 
+        margin-top: 10px;
+
+        label {
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+
+        .input-group-quantity {
+            position: relative;
+            margin-left: 20px;
+
+            .input-quantity {
+                width: 80px;
+                text-align: center;
+                height: 40px;
+                padding: 10px 39px 10px 10px;
+
+                &:focus {
+                    outline: 0;
+                    border-color: $color-gray-lite;
+                }
+            }
+
+            .btn-wrapper {
+                position: absolute;
+                top: 0;
+                right: 0;
+
+                .btn-number {
+                    position: absolute;
+                    right: 0;
+                    width: 30px;
+                    padding: 0;
+                    line-height: 18px;
+                    background: none;
+                    border: 1px solid $color-gray-lite;
+                    border-radius: 0;
+
+                    &:hover {
+                        color: $color-default;
+                        color: var(--color-primary);
+                    }
+
+                    &[disabled] {
+                        &:hover {
+                            color: $color-black;
+                        }
+                    }
+                }
+
+                .btn-plus {
+                    top: 0;
+                    height: 24px; 
+                    border-width: 0px 0px 1px 1px;
+                    border-top-right-radius: $radius-default;
+                }
+
+                .btn-minus {
+                    top: 19px;
+                    height: 19px; 
+                    border-width: 0px 0px 0px 1px;
+                    border-bottom-right-radius: $radius-default;
+                }
+            }
+        }
+    }
+}
+
+.billing-details-form-outer {
+    background: #F8F8F8;
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.billing-details-title {
+    font-size: 25px;
+    font-weight: 600;
+    font-family: 'Kanit';
+    color: #0C0A06;
+    margin-bottom: 20px;
+}
+
+.billing-details-form .input-field-wrap label {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'DM Sans';
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.billing-details-form .input-field-wrap input {
+    background: #FFFFFF;
+    height: 45px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.billing-details-form .input-field-wrap input:focus,
+.billing-details-form .input-field-wrap textarea:focus {
+    box-shadow: none;
+    border: 1px solid #FF7E16;
+}
+
+.billing-details-form .input-field-wrap textarea {
+    border: 1px solid #ced4da;
+    padding-left: 10px;
+}
+
+.cart-product-item-wrap {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.cart-product-item-left {
+    margin-right: 15px;
+    padding-top: 8px;
+}
+
+.cart-product-item-left img {
+    width: 85px;
+    box-shadow: rgb(210, 210, 210) 0px 2px 7px 0px;
+    border-radius: 4px;
+}
+
+.cart-product-item-right {
+    display: block; 
+    width: 100%;
+}
+
+.cart-product-item-right .left .cart-product-name {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(21, 22, 53);
+}
+
+.cart-product-item-right .left .cart-product-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #0C0A06;
+    margin-bottom: 0;
+}
+
+.cart-product-item-right .right .counter-up {
+    display: flex;
+    background: #fff;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.cart-product-item-right .right .counter-up .qtyminus {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid rgba(255, 126, 22, 0.5);
+    text-align: center;
+    font-size: 20px;
+    line-height: 30px;
+    color: #FF7E16;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.cart-product-item-right .right .counter-up .qtyplus {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    text-align: center;
+    font-size: 20px;
+    line-height: 30px;
+    color: #FF7E16;
+    cursor: pointer;
+    border: 1px solid rgba(255, 126, 22, 0.5);
+    border-radius: 50%;
+}
+
+.cart-product-item-right .right .counter-up .qty {
+    width: 60px;
+    border: none;
+    text-align: center;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'DM Sans';
+    color: #000;
+    outline: none;
+}
+
+.sub-total-wrap .sub-total-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.sub-total-item.grand-total {
+    border-top: 1px solid #EEEEEE;
+    padding-top: 10px;
+    margin-bottom: 25px;
+}
+
+.condition-ac-wrap {
+    margin: 20px 0;
+}
+
+.condition-ac-wrap label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #5E5E5E;
+}
+
+.order-place-btn-inner {
+    width: 100%;
+    border: 1px solid #FF7E16;
+    background: #FF7E16;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.order-place-btn-inner:hover {
+    background: transparent;
+    color: #FF7E16;
+}
+
+.payment-items-wrap {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.payment-items-wrap:before {
+    content: "";
+    display: block;
+    border: 1em solid #ffffff;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    position: absolute;
+    top: -0.75em;
+    left: 0;
+    margin: -1em 0 0 2em;
+}
+
+.payment-items-wrap p {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.sub-total-wrap .sub-total-item input {
+    border: none;
+    background: transparent;
+    text-align: right;
+    margin-right: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    width: 100px;
+}
+
+.sub-total-wrap .sub-total-item input:focus-visible {
+    outline: none;
+}
+
+/*Billing section css End*/

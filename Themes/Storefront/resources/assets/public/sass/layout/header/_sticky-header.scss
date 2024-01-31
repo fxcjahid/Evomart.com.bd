@@ -1,3 +1,16 @@
+.header-inner-shadow {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+    padding: 10px 0px;
+
+    .header-logo img {
+        padding-top: 18px;
+    }
+    
+    .header-search-lg {
+        max-width: 300px !important;
+    }
+}
+
 .header-wrap-inner {
     &.sticky {
         position: fixed;

@@ -8,6 +8,10 @@ use Modules\Product\Events\ProductViewed;
 use Modules\Product\Filters\ProductFilter;
 use Modules\Product\Http\Middleware\SetProductSortOption;
 use Modules\Review\Entities\Review;
+use Modules\Cart\Facades\Cart;
+use Modules\Payment\Facades\Gateway;
+use Modules\Cart\Http\Middleware\TrackVisitedOffers;
+use Modules\Address\Entities\DefaultAddress;
 
 class ProductController extends Controller
 {
@@ -20,6 +24,7 @@ class ProductController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(TrackVisitedOffers::class);
         $this->middleware(SetProductSortOption::class)->only('index');
     }
 
@@ -62,9 +67,45 @@ class ProductController extends Controller
         return view('public.products.show', compact('product', 'relatedProducts', 'upSellProducts', 'review'));
     }
 
+
+    /**
+     * Show the specified resource.
+     *
+     * @param string $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function offerProduct($slug)
+    {
+        $product = Product::findBySlug($slug);
+        $review  = $this->getReviewData($product);
+
+        $cart           = Cart::instance();
+        $gateways       = Gateway::all();
+        $addresses      = $this->getAddresses();
+        $defaultAddress = auth()->user()->defaultAddress ?? new DefaultAddress;
+
+        event(new ProductViewed($product));
+
+        return view('public.offer.show', compact('product', 'review', 'cart', 'gateways', 'addresses', 'defaultAddress'));
+    }
+
+    /**
+     * Get addresses for the logged in user.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function getAddresses()
+    {
+        if (auth()->guest()) {
+            return collect();
+        }
+
+        return auth()->user()->addresses->keyBy('id');
+    }
+
     private function getReviewData(Product $product)
     {
-        if (!setting('reviews_enabled')) {
+        if (! setting('reviews_enabled')) {
             return;
         }
 

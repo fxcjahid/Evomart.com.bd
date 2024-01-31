@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('products', 'ProductController@index')->name('products.index');
 Route::get('products/{slug}', 'ProductController@show')->name('products.show');
+Route::get('offers/{slug}', 'ProductController@offerProduct')->name('products.show.offer');
 
 Route::get('suggestions', 'SuggestionController@index')->name('suggestions.index');
 

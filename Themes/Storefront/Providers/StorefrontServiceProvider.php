@@ -33,6 +33,7 @@ class StorefrontServiceProvider extends ServiceProvider
         TabManager::register('storefront', StorefrontTabs::class);
 
         View::composer('public.layout', LayoutComposer::class);
+        View::composer('public.offer.layout', LayoutComposer::class);
         View::composer('public.home.index', HomePageComposer::class);
         View::composer('public.products.index', ProductIndexPageComposer::class);
         View::composer('public.products.show', ProductShowPageComposer::class);
