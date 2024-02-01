@@ -13,13 +13,15 @@ use Modules\Shipping\Facades\ShippingMethod;
 use Modules\Support\Money;
 use Modules\Tax\Entities\TaxRate;
 
-class Cart extends DarryldecodeCart implements JsonSerializable {
+class Cart extends DarryldecodeCart implements JsonSerializable
+{
     /**
      * Get the current instance.
      *
      * @return $this
      */
-    public function instance() {
+    public function instance()
+    {
         return $this;
     }
 
@@ -28,7 +30,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
      *
      * @return void
      */
-    public function clear() {
+    public function clear()
+    {
         parent::clear();
 
         $this->clearCartConditions();
@@ -43,34 +46,65 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
      *
      * @return void
      */
-    public function store($productId, $qty, $options = []) {
+    public function store($productId, $qty, $options = [])
+    {
         $options       = array_filter($options);
         $product       = Product::with('files', 'categories', 'taxClass')->findOrFail($productId);
         $chosenOptions = new ChosenProductOptions($product, $options);
 
         $this->add([
-            'id'         => md5("product_id.{$product->id}:options." . serialize($options)),
-            'name'       => $product->name,
-            'price'      => $product->selling_price->amount(),
-            'quantity'   => $qty,
+            'id' => md5("product_id.{$product->id}:options." . serialize($options)),
+            'name' => $product->name,
+            'price' => $product->selling_price->amount(),
+            'quantity' => $qty,
             'attributes' => [
-                'product'    => $product,
-                'options'    => $chosenOptions->getEntities(),
+                'product' => $product,
+                'options' => $chosenOptions->getEntities(),
                 'created_at' => time(),
             ],
         ]);
     }
 
-    public function updateQuantity($id, $qty) {
-        $this->update($id, [
-            'quantity' => [
-                'relative' => false,
-                'value'    => $qty,
+    /**
+     * Update cart item.
+     *
+     * @param int $cartId
+     * @param int $productId
+     * @param int $qty
+     * @param array $options
+     *
+     * @return void
+     */
+    public function updateCart($cartId, $productId, $qty, $options = [])
+    {
+        $options       = array_filter($options);
+        $product       = Product::with('files', 'categories', 'taxClass')->findOrFail($productId);
+        $chosenOptions = new ChosenProductOptions($product, $options);
+
+        $this->update($cartId, [
+            // 'id' => md5("product_id.{$product->id}:options." . serialize($options)),
+            'name' => $product->name,
+            'price' => $product->selling_price->amount(),
+            'quantity' => $qty,
+            'attributes' => [
+                'product' => $product,
+                'options' => $chosenOptions->getEntities(),
             ],
         ]);
     }
 
-    public function items() {
+    public function updateQuantity($id, $qty)
+    {
+        $this->update($id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $qty,
+            ],
+        ]);
+    }
+
+    public function items()
+    {
         return $this->getContent()
             ->sortBy('attributes.created_at')
             ->map(function ($item) {
@@ -78,17 +112,20 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
             });
     }
 
-    public function addedQty($productId) {
+    public function addedQty($productId)
+    {
         return $this->findByProductId($productId)->sum('qty');
     }
 
-    public function findByProductId($productId) {
+    public function findByProductId($productId)
+    {
         return $this->items()->filter(function ($cartItem) use ($productId) {
             return $cartItem->product->id == $productId;
         });
     }
 
-    public function crossSellProducts() {
+    public function crossSellProducts()
+    {
         return $this->getAllProducts()
             ->load([
                 'crossSellProducts' => function ($query) {
@@ -99,7 +136,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
             ->flatten();
     }
 
-    public function getAllProducts() {
+    public function getAllProducts()
+    {
         return $this->items()
             ->map(function ($cartItem) {
                 return $cartItem->product;
@@ -110,7 +148,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
             });
     }
 
-    public function reduceStock() {
+    public function reduceStock()
+    {
         $this->manageStock(function ($cartItem) {
             $cartItem->product->decrement('qty', $cartItem->qty);
 
@@ -120,7 +159,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         });
     }
 
-    public function restoreStock() {
+    public function restoreStock()
+    {
         $this->manageStock(function ($cartItem) {
             $cartItem->product->increment('qty', $cartItem->qty);
 
@@ -130,7 +170,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         });
     }
 
-    private function manageStock($callback) {
+    private function manageStock($callback)
+    {
         $this->items()
             ->filter(function ($cartItem) {
                 return $cartItem->product->manage_stock;
@@ -138,15 +179,18 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
             ->each($callback);
     }
 
-    public function quantity() {
+    public function quantity()
+    {
         return $this->getTotalQuantity();
     }
 
-    public function hasAvailableShippingMethod() {
+    public function hasAvailableShippingMethod()
+    {
         return $this->availableShippingMethods()->isNotEmpty();
     }
 
-    public function availableShippingMethods() {
+    public function availableShippingMethods()
+    {
         if ($this->allItemsAreVirtual()) {
             return collect();
         }
@@ -154,38 +198,43 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         return ShippingMethod::available();
     }
 
-    public function allItemsAreVirtual() {
+    public function allItemsAreVirtual()
+    {
         return $this->items()->every(function (CartItem $cartItem) {
             return $cartItem->product->is_virtual;
         });
     }
 
-    public function hasShippingMethod() {
+    public function hasShippingMethod()
+    {
         return $this->getConditionsByType('shipping_method')->isNotEmpty();
     }
 
-    public function shippingMethod() {
-        if (!$this->hasShippingMethod()) {
+    public function shippingMethod()
+    {
+        if (! $this->hasShippingMethod()) {
             return new NullCartShippingMethod();
         }
 
         return new CartShippingMethod($this, $this->getConditionsByType('shipping_method')->first());
     }
 
-    public function shippingCost() {
+    public function shippingCost()
+    {
         return $this->shippingMethod()->cost();
     }
 
-    public function addShippingMethod($shippingMethod) {
+    public function addShippingMethod($shippingMethod)
+    {
         $this->removeShippingMethod();
 
         $this->condition(
             new CartCondition([
-                'name'       => $shippingMethod->label,
-                'type'       => 'shipping_method',
-                'target'     => 'total',
-                'value'      => "+{$shippingMethod->cost->amount()}",
-                'order'      => 1,
+                'name' => $shippingMethod->label,
+                'type' => 'shipping_method',
+                'target' => 'total',
+                'value' => "+{$shippingMethod->cost->amount()}",
+                'order' => 1,
                 'attributes' => [
                     'shipping_method' => $shippingMethod,
                 ],
@@ -197,17 +246,20 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         return $this->shippingMethod();
     }
 
-    public function removeShippingMethod() {
+    public function removeShippingMethod()
+    {
         $this->removeConditionsByType('shipping_method');
     }
 
-    private function refreshFreeShippingCoupon() {
+    private function refreshFreeShippingCoupon()
+    {
         if ($this->coupon()->isFreeShipping()) {
             $this->applyCoupon($this->coupon()->entity());
         }
     }
 
-    public function hasCoupon() {
+    public function hasCoupon()
+    {
         if ($this->getConditionsByType('coupon')->isEmpty()) {
             return false;
         }
@@ -219,12 +271,14 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         return Coupon::where('id', $couponId)->exists();
     }
 
-    public function couponAlreadyApplied(Coupon $coupon) {
+    public function couponAlreadyApplied(Coupon $coupon)
+    {
         return $this->coupon()->code() === $coupon->code;
     }
 
-    public function coupon() {
-        if (!$this->hasCoupon()) {
+    public function coupon()
+    {
+        if (! $this->hasCoupon()) {
             return new NullCartCoupon();
         }
 
@@ -234,20 +288,22 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         return new CartCoupon($this, $coupon, $couponCondition);
     }
 
-    public function discount() {
+    public function discount()
+    {
         return $this->coupon()->value();
     }
 
-    public function applyCoupon(Coupon $coupon) {
+    public function applyCoupon(Coupon $coupon)
+    {
         $this->removeCoupon();
 
         $this->condition(
             new CartCondition([
-                'name'       => $coupon->code,
-                'type'       => 'coupon',
-                'target'     => 'total',
-                'value'      => $this->getCouponValue($coupon),
-                'order'      => 2,
+                'name' => $coupon->code,
+                'type' => 'coupon',
+                'target' => 'total',
+                'value' => $this->getCouponValue($coupon),
+                'order' => 2,
                 'attributes' => [
                     'coupon_id' => $coupon->id,
                 ],
@@ -255,7 +311,8 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         );
     }
 
-    private function getCouponValue($coupon) {
+    private function getCouponValue($coupon)
+    {
         if ($coupon->free_shipping) {
             return "-{$this->shippingMethod()->cost()->amount()}";
         }
@@ -267,16 +324,19 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         return "-{$coupon->value->amount()}";
     }
 
-    public function removeCoupon() {
+    public function removeCoupon()
+    {
         $this->removeConditionsByType('coupon');
     }
 
-    public function hasTax() {
+    public function hasTax()
+    {
         return $this->getConditionsByType('tax')->isNotEmpty();
     }
 
-    public function taxes() {
-        if (!$this->hasTax()) {
+    public function taxes()
+    {
+        if (! $this->hasTax()) {
             return new Collection();
         }
 
@@ -290,33 +350,37 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         });
     }
 
-    private function getTaxRateIds($taxConditions) {
+    private function getTaxRateIds($taxConditions)
+    {
         return $taxConditions->map(function ($taxCondition) {
             return $taxCondition->getAttribute('tax_rate_id');
         });
     }
 
-    public function tax() {
+    public function tax()
+    {
         return Money::inDefaultCurrency($this->calculateTax());
     }
 
-    private function calculateTax() {
+    private function calculateTax()
+    {
         return $this->taxes()->sum(function ($cartTax) {
             return $cartTax->amount()->amount();
         });
     }
 
-    public function addTaxes($request) {
+    public function addTaxes($request)
+    {
         $this->removeTaxes();
 
         $this->findTaxes($request)->each(function ($taxRate) {
             $this->condition(
                 new CartCondition([
-                    'name'       => $taxRate->id,
-                    'type'       => 'tax',
-                    'target'     => 'total',
-                    'value'      => "+{$taxRate->rate}%",
-                    'order'      => 3,
+                    'name' => $taxRate->id,
+                    'type' => 'tax',
+                    'target' => 'total',
+                    'value' => "+{$taxRate->rate}%",
+                    'order' => 3,
                     'attributes' => [
                         'tax_rate_id' => $taxRate->id,
                     ],
@@ -325,11 +389,13 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         });
     }
 
-    public function removeTaxes() {
+    public function removeTaxes()
+    {
         $this->removeConditionsByType('tax');
     }
 
-    private function findTaxes($request) {
+    private function findTaxes($request)
+    {
         return $this->items()
             ->groupBy('tax_class_id')
             ->flatten()
@@ -339,15 +405,18 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
             ->filter();
     }
 
-    public function subTotal() {
+    public function subTotal()
+    {
         return Money::inDefaultCurrency($this->getSubTotal())->add($this->optionsPrice());
     }
 
-    private function optionsPrice() {
+    private function optionsPrice()
+    {
         return Money::inDefaultCurrency($this->calculateOptionsPrice());
     }
 
-    private function calculateOptionsPrice() {
+    private function calculateOptionsPrice()
+    {
         return $this->items()->sum(function ($cartItem) {
             return $cartItem
                 ->optionsPrice()
@@ -356,32 +425,36 @@ class Cart extends DarryldecodeCart implements JsonSerializable {
         });
     }
 
-    public function total() {
+    public function total()
+    {
         return $this->subTotal()
             ->add($this->shippingMethod()->cost())
             ->subtract($this->coupon()->value())
             ->add($this->tax());
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return [
-            'items'                    => $this->items(),
-            'quantity'                 => $this->quantity(),
+            'items' => $this->items(),
+            'quantity' => $this->quantity(),
             'availableShippingMethods' => $this->availableShippingMethods(),
-            'subTotal'                 => $this->subTotal(),
-            'shippingMethodName'       => $this->shippingMethod()->name(),
-            'shippingCost'             => $this->shippingCost(),
-            'coupon'                   => $this->coupon(),
-            'taxes'                    => $this->taxes(),
-            'total'                    => $this->total(),
+            'subTotal' => $this->subTotal(),
+            'shippingMethodName' => $this->shippingMethod()->name(),
+            'shippingCost' => $this->shippingCost(),
+            'coupon' => $this->coupon(),
+            'taxes' => $this->taxes(),
+            'total' => $this->total(),
         ];
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return $this->toArray();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return json_encode($this->jsonSerialize());
     }
 }

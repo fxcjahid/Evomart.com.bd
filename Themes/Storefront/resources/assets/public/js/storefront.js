@@ -416,16 +416,16 @@ $(() => {
 
     $('.additional-image-wrap').slick({
         rows: 0,
-        dots: false,
+        dots: true,
         arrows: true,
-        vertical: true,
+        vertical: false,
         infinite: false,
         slidesToShow: 4,
         slideToScroll: 1,
         asNavFor: baseImage,
         focusOnSelect: true,
-        adaptiveHeight: true,
-        verticalSwiping: true,
+        adaptiveHeight: false,
+        verticalSwiping: false,
         responsive: [
             {
                 breakpoint: 577,

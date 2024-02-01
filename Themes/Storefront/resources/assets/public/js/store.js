@@ -12,6 +12,18 @@ export default {
         return isEmpty(this.state.cart.items);
     },
 
+    getCartItem() {
+        return this.state.cart.items;
+    },
+
+    getCartFirstId() {  
+        return Object.keys(this.state.cart.items)[0] || null;
+    },
+
+    getCartFirstQuantity() {
+        return this.state.cart.items[this.getCartFirstId()].qty || null;
+    },
+
     updateCart(cart) {
         this.state.cart = cart;
     },

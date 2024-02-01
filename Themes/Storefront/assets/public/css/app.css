@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap);
 @charset "UTF-8";
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
@@ -20763,6 +20764,28 @@ p {
   outline: 0;
 }
 
+.whatsapp-call {
+  background: #07d954;
+  color: #fff;
+  padding: 8px 16px;
+  font-family: "Hind Siliguri";
+  font-size: 175%;
+}
+.whatsapp-call:hover {
+  background: #23b75a;
+  color: #fff;
+}
+
+.quick-buy {
+  max-width: 100%;
+  margin-left: 0px;
+  margin-right: 0;
+  background: var(--color-primary);
+  font-family: "Hind Siliguri";
+  font-size: 175%;
+  padding: 7px 10px;
+}
+
 .btn-primary {
   font-weight: 500;
   color: #ffffff;
@@ -27599,7 +27622,8 @@ textarea.form-control {
 }
 
 .billing-details-section {
-  padding: 50px 0;
+  font-family: "Hind Siliguri", sans-serif;
+  padding: 40px 15px;
 }
 .billing-details-section .number-picker {
   display: inline-flex;
@@ -27608,6 +27632,7 @@ textarea.form-control {
 .billing-details-section .number-picker label {
   font-weight: 400;
   margin-bottom: 0;
+  color: #6e6e6e;
 }
 .billing-details-section .number-picker .input-group-quantity {
   position: relative;
@@ -27659,12 +27684,24 @@ textarea.form-control {
 
 .billing-details-form-outer {
   background: #F8F8F8;
-  padding: 25px;
+  padding: 27px;
   border-radius: 5px;
 }
+.billing-details-form-outer .form-group label {
+  font-size: 108% !important;
+}
 .billing-details-form-outer .form-group label,
-.billing-details-form-outer div > span {
+.billing-details-form-outer div > span,
+.billing-details-form-outer .payment-item-title {
   font-weight: 400;
+  font-size: 120%;
+  font-family: "Rubik", sans-serif;
+}
+.billing-details-form-outer .billing-details-form {
+  padding-top: 5px;
+}
+.billing-details-form-outer .billing-details-form .input-field-wrap {
+  padding-bottom: 10px;
 }
 .billing-details-form-outer .form-group {
   margin-top: 10px;
@@ -27688,11 +27725,12 @@ textarea.form-control {
 .billing-details-form-outer .order-summary-details .-subtotal-amount,
 .billing-details-form-outer .order-summary-details .-delivery-charge,
 .billing-details-form-outer .order-summary-details .-total-amount {
-  font-size: 16px;
+  font-size: 120%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 7px 0px;
+  font-family: "Rubik", sans-serif;
 }
 .billing-details-form-outer .order-summary-details .-total-amount:last-child {
   border-top: 1px solid #ebebeb;
@@ -27707,22 +27745,24 @@ textarea.form-control {
 }
 
 .billing-details-title {
-  font-size: 25px;
+  font-size: 160%;
   font-weight: 600;
-  font-family: "Kanit";
+  font-family: "Hind Siliguri", sans-serif !important;
   color: #0C0A06;
   margin-bottom: 20px;
+  margin-top: 5px;
 }
 
 .billing-details-form .input-field-wrap label {
-  font-size: 16px;
-  font-weight: 500;
-  font-family: "DM Sans";
-  color: #000000;
+  font-size: 120%;
+  word-spacing: 1px;
+  font-weight: 400;
+  color: #1c1f35;
   margin-bottom: 5px;
 }
 
-.billing-details-form .input-field-wrap input {
+.billing-details-form .input-field-wrap input,
+.billing-details-form .input-field-wrap textarea {
   background: #FFFFFF;
   height: 45px;
   margin-bottom: 20px;
@@ -27736,8 +27776,8 @@ textarea.form-control {
 }
 
 .billing-details-form .input-field-wrap textarea {
-  border: 1px solid #ced4da;
-  padding-left: 10px;
+  resize: none;
+  height: 80px;
 }
 
 .cart-product-item-wrap {
@@ -27746,6 +27786,19 @@ textarea.form-control {
   border-bottom: 1px solid #EEEEEE;
   padding-bottom: 20px;
   margin-bottom: 25px;
+}
+.cart-product-item-wrap ul.product-options {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.cart-product-item-wrap ul.product-options li {
+  border-bottom: 1px dashed #eeeeee !important;
+  padding: 5px 0px 5px 0 !important;
+  font-size: 15px;
+}
+.cart-product-item-wrap ul.product-options li:last-child {
+  margin-bottom: 15px;
 }
 .cart-product-item-wrap ul,
 .cart-product-item-wrap li {
@@ -27757,9 +27810,10 @@ textarea.form-control {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.cart-product-item-wrap li:last-child {
+.cart-product-item-wrap li:last-child, .cart-product-item-wrap li:first-child {
   border-bottom: none;
   padding-bottom: 10px;
+  padding-top: 0px;
 }
 
 .cart-product-item-left {
@@ -27778,8 +27832,7 @@ textarea.form-control {
   width: 100%;
 }
 .cart-product-item-right .right {
-  display: flex;
-  align-items: center;
+  display: block;
 }
 .cart-product-item-right .btn-remove {
   margin-left: 10px;
@@ -27873,9 +27926,9 @@ textarea.form-control {
   width: 100%;
   border: 0;
   background: var(--color-primary);
-  padding: 12px 0;
-  font-size: 18px;
-  font-weight: 500;
+  padding: 5px 0;
+  font-size: 220%;
+  font-weight: 600;
   color: #ffffff;
   border-radius: 5px;
   margin-top: 5px;
@@ -27908,11 +27961,12 @@ textarea.form-control {
 
 .payment-items-wrap p {
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 99%;
   font-weight: 400;
+  font-family: "Hind Siliguri", sans-serif;
 }
 .payment-items-wrap b {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .oder-summary-wrap .sub-total-item input {
@@ -27929,7 +27983,73 @@ textarea.form-control {
   outline: none;
 }
 
-/*Billing section css End*/
+.landing-page {
+  width: 100%;
+  padding: 0 50px 0 0;
+}
+
+@media (min-width: 1200px) {
+  .landing-page-product .product-details-top-inner.grid {
+    display: grid;
+    grid-template: "baseImage productInfo" "additionalImage additionalImage";
+    -moz-column-gap: 30px;
+         column-gap: 30px;
+    row-gap: 0px;
+  }
+  .landing-page-product .product-details-top-inner.grid .baseImage {
+    grid-area: baseImage;
+  }
+  .landing-page-product .product-details-top-inner.grid .additionalImage {
+    grid-area: additionalImage;
+  }
+  .landing-page-product .product-details-top-inner.grid .productInfo {
+    grid-area: productInfo;
+  }
+}
+.landing-page-product .additional-image-wrap {
+  display: inline-flex;
+  margin: 20px 15px;
+  width: 100%;
+  min-width: 100%;
+}
+.landing-page-product .additional-image-wrap .additional-image {
+  height: 240px;
+  width: 260px !important;
+  margin: 10px 0 10px 25px;
+}
+.landing-page-product .additional-image-wrap .additional-image:first-child {
+  margin-left: 0px;
+}
+.landing-page-product .additional-image-wrap .additional-image:last-child {
+  margin-right: 0px;
+}
+
+.landingpage-wraping .product-details-info .product-name {
+  font-size: 180%;
+  font-weight: 500;
+  line-height: 30px;
+  margin-bottom: 15px;
+  font-family: "Hind Siliguri";
+}
+.landingpage-wraping .product-details-info .brief-description {
+  margin-bottom: 12px;
+  color: #565656;
+  font-size: 120%;
+  font-family: "Hind Siliguri", sans-serif;
+  padding-right: 25%;
+}
+@media screen and (min-width: 1000px) {
+  .landingpage-wraping .brief-description {
+    padding-right: 25%;
+  }
+}
+@media screen and (max-width: 1500px) {
+  .landingpage-wraping .container {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
 .error-page-left {
   display: flex;
   justify-content: center;

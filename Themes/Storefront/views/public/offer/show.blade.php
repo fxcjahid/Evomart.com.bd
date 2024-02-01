@@ -32,55 +32,10 @@
 @section('content')
     <product-show :product="{{ $product }}" :review-count="{{ $review->count ?? 0 }}"
         :avg-rating="{{ $review->avg_rating ?? 0 }}" inline-template>
-        <section class="product-details-wrap">
+        <section class="product-details-wrap landingpage-wraping">
             <div class="container">
-                <div class="product-details-top">
-                    <div class="product-details-top-inner">
-                        @include('public.products.show.images')
 
-                        <div class="product-details-info">
-                            <div class="details-info-top">
-                                <h1 class="product-name">{{ $product->name }}</h1>
-
-                                <div class="brief-description">
-                                    {!! $product->short_description !!}
-                                </div>
-
-                            </div>
-
-                            <div class="details-info-middle">
-                                <div class="product-price" v-html="price">
-                                    {!! $product->formatted_price !!}
-                                </div>
-
-                                <form @submit.prevent="addToCart" @input="errors.clear($event.target.name)"
-                                    @change="updatePrice" @nice-select-updated="updatePrice">
-
-
-
-                                    <div class="details-info-button-actions">
-
-                                        <button type="button" class="btn btn-primary buynow"
-                                            :class="{ 'btn-loading': loadingProduct }" @click="buyProduct"
-                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}>
-                                            <i class="las la-cart-arrow-down"></i>
-                                            Buy Now
-                                        </button>
-
-                                        <button type="submit" class="btn btn-primary btn-add-to-cart addToCart"
-                                            :class="{ 'btn-loading': addingToCart }"
-                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}>
-                                            Add to cart
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
+                @include('public.offer.compotent.product-details', $product)
 
                 @include('public.offer.compotent.place_order', $product)
 

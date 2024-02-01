@@ -27776,8 +27776,7 @@ textarea.form-control {
   width: 100%;
 }
 .cart-product-item-right .right {
-  display: flex;
-  align-items: center;
+  display: block;
 }
 .cart-product-item-right .btn-remove {
   margin-right: 10px;

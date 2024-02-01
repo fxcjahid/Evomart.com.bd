@@ -80,6 +80,7 @@ class ProductController extends Controller
         $review  = $this->getReviewData($product);
 
         /** Create Add To Card Instance */
+        Cart::clear();
         Cart::store(productId: $product->id, qty: 1, options: []);
 
         $cart           = Cart::instance();

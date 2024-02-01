@@ -2,6 +2,7 @@
 
 namespace Modules\Cart\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\Cart\Facades\Cart;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Routing\Controller;
@@ -51,6 +52,34 @@ class CartItemController extends Controller
     public function update($cartItemId)
     {
         Cart::updateQuantity($cartItemId, request('qty'));
+
+        try {
+            resolve(Pipeline::class)
+                ->send(Cart::coupon())
+                ->through($this->checkers)
+                ->thenReturn();
+        } catch (MinimumSpendException | MaximumSpendException $e) {
+            Cart::removeCoupon();
+        }
+
+        return Cart::instance();
+    }
+
+    /**
+     * Update the specified cart option in storage.
+     *
+     * @param mixed $cartItemId
+     * @return \Modules\Cart\Facades\Cart::instance
+     */
+    public function option(Request $request)
+    {
+
+        $cartId    = $request->cartId;
+        $productId = $request->productId;
+        $qty       = $request->qty;
+        $options   = $request->options;
+
+        Cart::updateCart($cartId, $productId, $qty, $options);
 
         try {
             resolve(Pipeline::class)
