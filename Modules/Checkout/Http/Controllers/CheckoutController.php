@@ -43,12 +43,12 @@ class CheckoutController extends Controller
     {
         Gateway::all();
         return view('public.checkout.create', [
-            'cart' => Cart::instance(),
-            'countries' => Country::supported(),
-            'gateways' => Gateway::all(),
+            'cart'           => Cart::instance(),
+            'countries'      => Country::supported(),
+            'gateways'       => Gateway::all(),
             'defaultAddress' => auth()->user()->defaultAddress ?? new DefaultAddress,
-            'addresses' => $this->getAddresses(),
-            'termsPageURL' => Page::urlForPage(setting('storefront_terms_page')),
+            'addresses'      => $this->getAddresses(),
+            'termsPageURL'   => Page::urlForPage(setting('storefront_terms_page')),
         ]);
     }
 
@@ -66,12 +66,12 @@ class CheckoutController extends Controller
 
         Gateway::all();
         return view('public.checkout.guest', [
-            'cart' => Cart::instance(),
-            'countries' => Country::supported(),
-            'gateways' => Gateway::all(),
+            'cart'           => Cart::instance(),
+            'countries'      => Country::supported(),
+            'gateways'       => Gateway::all(),
             'defaultAddress' => auth()->user()->defaultAddress ?? new DefaultAddress,
-            'addresses' => $this->getAddresses(),
-            'termsPageURL' => Page::urlForPage(setting('storefront_terms_page')),
+            'addresses'      => $this->getAddresses(),
+            'termsPageURL'   => Page::urlForPage(setting('storefront_terms_page')),
         ]);
     }
 

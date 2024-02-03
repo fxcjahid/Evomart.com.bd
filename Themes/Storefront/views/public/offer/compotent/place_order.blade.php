@@ -126,7 +126,7 @@
 
                         <div class="total-payment-form" :class="{ loading: loadingOrderSummary }">
                             <div class="oder-summary-wrap">
-
+                                <input type="hidden" name="payment_method" value="cod" style="display: none">
                                 <div class="delivery-selection" v-if="hasShippingMethod" v-cloak>
                                     <span>Select delivery area</span>
                                     <div class="form-group">

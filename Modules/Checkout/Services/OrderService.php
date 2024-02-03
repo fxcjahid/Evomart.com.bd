@@ -101,22 +101,55 @@ class OrderService
 
     private function customerName($request)
     {
-        return $request->first_name ?? $request->billing['first_name'];
+        if ($request->fullname) {
+            $fullname = $request->fullname;
+        } else {
+            $fullname = $request->last_name ?? $request->billing['last_name'];
+        }
+
+        /** 
+         * Split the full name into an array using a space as the delimiter
+         */
+        $nameParts = explode(' ', $fullname);
+
+        /**
+         * Initialize first and last name
+         */
+        $firstName = '';
+        $lastName  = '';
+
+        /**
+         * Extract first and last names based on the number of parts
+         */
+        if (count($nameParts) > 0) {
+            $firstName = $nameParts[0];
+            if (count($nameParts) > 1) {
+                $lastName = implode(' ', array_slice($nameParts, 1));
+            }
+        }
+
+        /**
+         * Return an object with first_name and last_name properties
+         */
+        return (object) [
+            'firstName' => $firstName,
+            'lastName'  => $lastName,
+            'fullName'  => $fullname,
+        ];
     }
 
     private function store($request)
     {
-
-
         return Order::create([
             'customer_id'         => auth()->id(),
-            'customer_first_name' => $this->customerName($request),
-            'customer_last_name'  => $request->last_name ?? $request->billing['last_name'],
+            'customer_first_name' => $this->customerName($request)->firstName,
+            'customer_last_name'  => $this->customerName($request)->lastName,
+            'customer_name'       => $this->customerName($request)->fullName,
             'customer_email'      => $request->customer_email ?? null,
-            'customer_phone'      => $request->billing['phone'] ?? $request->customer_phone,
+            'customer_phone'      => $request->billing['phone'] ?? $request->phone,
 
-            'billing_first_name'  => $request->first_name ?? $request->billing['first_name'],
-            'billing_last_name'   => $request->last_name ?? $request->billing['last_name'],
+            'billing_first_name'  => $this->customerName($request)->firstName,
+            'billing_last_name'   => $this->customerName($request)->lastName,
             'billing_address_1'   => $request->address ?? $request->billing['address_1'],
             'billing_address_2'   => $request->billing['address_2'] ?? null,
             'billing_city'        => $request->billing['city'] ?? null,
@@ -124,8 +157,8 @@ class OrderService
             'billing_zip'         => $request->billing['zip'] ?? null,
             'billing_country'     => $request->billing['country'] ?? null,
 
-            'shipping_first_name' => $request->first_name ?? $request->shipping['first_name'],
-            'shipping_last_name'  => $request->last_name ?? $request->shipping['last_name'],
+            'shipping_first_name' => $this->customerName($request)->firstName,
+            'shipping_last_name'  => $this->customerName($request)->lastName,
             'shipping_address_1'  => $request->address ?? $request->shipping['address_1'],
             'shipping_address_2'  => $request->shipping['address_2'] ?? null,
             'shipping_city'       => $request->shipping['city'] ?? null,

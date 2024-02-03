@@ -220,9 +220,7 @@ export default {
             form.forEach((value, key) => {
                 formData[key] = value;
             });
-
-            console.log(formData);
-
+  
 			$.ajax({
 				method: "POST",
 				url: route("checkout.fromLandingPage"),
@@ -234,7 +232,7 @@ export default {
 					 } else {
 						this.confirmOrder(
 							response.orderId,
-							this.form.payment_method
+							formData.payment_method
 						);
 					}
 				})
@@ -259,7 +257,7 @@ export default {
 				}),
 			})
 				.then(() => {
-					window.location.href = route("checkout.complete.show");
+					window.location.href = route("checkout.complete.show", { paymentMethod: paymentMethod });
 				})
 				.catch((xhr) => {
 					this.placingOrder = false;
