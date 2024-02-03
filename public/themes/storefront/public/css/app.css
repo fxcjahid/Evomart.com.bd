@@ -26283,6 +26283,48 @@ textarea.form-control {
     padding-bottom: 90%;
   }
 }
+.offer-additional-image-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 50px 0px 25px 15px;
+  width: 100%;
+  min-width: 100%;
+  gap: 25px;
+}
+.offer-additional-image-wrap .additional-image {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 150ms ease-in-out;
+}
+.offer-additional-image-wrap .additional-image:first-child {
+  margin-left: 0px;
+}
+.offer-additional-image-wrap .additional-image:last-child {
+  margin-right: 0px;
+}
+.offer-additional-image-wrap .additional-image.slick-current {
+  border-color: #0068e1;
+  border-color: var(--color-primary);
+}
+.offer-additional-image-wrap .additional-image > img {
+  max-height: 100%;
+  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.offer-additional-image-wrap .additional-image .image-placeholder {
+  height: 35px;
+  width: 35px;
+}
+
 .product-details-info {
   width: calc(100% - 600px);
   padding: 0 15px 0 30px;
@@ -27701,7 +27743,7 @@ textarea.form-control {
   padding-top: 5px;
 }
 .billing-details-form-outer .billing-details-form .input-field-wrap {
-  padding-bottom: 10px;
+  padding-bottom: 25px;
 }
 .billing-details-form-outer .form-group {
   margin-top: 10px;
@@ -27715,6 +27757,12 @@ textarea.form-control {
   font-weight: 400;
   line-height: 24px;
   color: var(--color-primary);
+}
+.billing-details-form-outer .error-message {
+  font-family: "Hind Siliguri", sans-serif;
+}
+.billing-details-form-outer .form-control.has-error {
+  border-color: #e23e1d;
 }
 .billing-details-form-outer .order-summary-details {
   padding: 5px 10px;
@@ -27765,7 +27813,6 @@ textarea.form-control {
 .billing-details-form .input-field-wrap textarea {
   background: #FFFFFF;
   height: 45px;
-  margin-bottom: 20px;
   border-radius: 5px;
 }
 
@@ -27994,6 +28041,7 @@ textarea.form-control {
     grid-template: "baseImage productInfo" "additionalImage additionalImage";
     -moz-column-gap: 30px;
          column-gap: 30px;
+    grid-template-columns: 620px auto;
     row-gap: 0px;
   }
   .landing-page-product .product-details-top-inner.grid .baseImage {
@@ -28006,30 +28054,31 @@ textarea.form-control {
     grid-area: productInfo;
   }
 }
-.landing-page-product .additional-image-wrap {
-  display: inline-flex;
-  margin: 20px 15px;
-  width: 100%;
-  min-width: 100%;
-}
-.landing-page-product .additional-image-wrap .additional-image {
-  height: 240px;
-  width: 260px !important;
-  margin: 10px 0 10px 25px;
-}
-.landing-page-product .additional-image-wrap .additional-image:first-child {
-  margin-left: 0px;
-}
-.landing-page-product .additional-image-wrap .additional-image:last-child {
-  margin-right: 0px;
-}
 
+.landingpage-wraping .description,
+.landingpage-wraping .description > *,
+.landingpage-wraping .description p,
+.landingpage-wraping .description b,
+.landingpage-wraping .description span,
+.landingpage-wraping .description h1,
+.landingpage-wraping .description h2,
+.landingpage-wraping .description h3,
+.landingpage-wraping .description h4,
+.landingpage-wraping .description h5,
+.landingpage-wraping .description h6 {
+  font-family: "Hind Siliguri", sans-serif;
+}
+.landingpage-wraping .description p {
+  font-size: 130%;
+  line-height: 215%;
+  color: #434343;
+}
 .landingpage-wraping .product-details-info .product-name {
   font-size: 180%;
   font-weight: 500;
   line-height: 30px;
   margin-bottom: 15px;
-  font-family: "Hind Siliguri";
+  font-family: "Hind Siliguri", sans-serif;
 }
 .landingpage-wraping .product-details-info .brief-description {
   margin-bottom: 12px;
@@ -28047,6 +28096,9 @@ textarea.form-control {
   .landingpage-wraping .container {
     padding-left: 48px;
     padding-right: 48px;
+  }
+  .landingpage-wraping .landing-page-product .product-details-top-inner.grid {
+    grid-template-columns: 525px auto;
   }
 }
 

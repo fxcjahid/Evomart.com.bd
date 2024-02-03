@@ -65,13 +65,13 @@ class OrderService
     {
         return [
             'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'address_1' => $data['address_1'],
-            'address_2' => $data['address_2'] ?? null,
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'zip' => $data['zip'],
-            'country' => $data['country'],
+            'last_name'  => $data['last_name'],
+            'address_1'  => $data['address_1'],
+            'address_2'  => $data['address_2'] ?? null,
+            'city'       => $data['city'],
+            'state'      => $data['state'],
+            'zip'        => $data['zip'],
+            'country'    => $data['country'],
         ];
     }
 
@@ -87,7 +87,7 @@ class OrderService
         }
 
         DefaultAddress::create([
-            'address_id' => $address->id,
+            'address_id'  => $address->id,
             'customer_id' => auth()->id(),
         ]);
     }
@@ -99,47 +99,54 @@ class OrderService
         }
     }
 
+    private function customerName($request)
+    {
+        return $request->first_name ?? $request->billing['first_name'];
+    }
+
     private function store($request)
     {
-        return Order::create([
-            'customer_id' => auth()->id(),
-            'customer_first_name' => $request->first_name ?? $request->billing['first_name'],
-            'customer_last_name' => $request->last_name ?? $request->billing['last_name'],
-            'customer_email' => $request->customer_email ?? null,
-            'customer_phone' => $request->billing['phone'] ?? $request->customer_phone,
 
-            'billing_first_name' => $request->first_name ?? $request->billing['first_name'],
-            'billing_last_name' => $request->last_name ?? $request->billing['last_name'],
-            'billing_address_1' => $request->address ?? $request->billing['address_1'],
-            'billing_address_2' => $request->billing['address_2'] ?? null,
-            'billing_city' => $request->billing['city'] ?? null,
-            'billing_state' => $request->billing['state'] ?? null,
-            'billing_zip' => $request->billing['zip'] ?? null,
-            'billing_country' => $request->billing['country'] ?? null,
+
+        return Order::create([
+            'customer_id'         => auth()->id(),
+            'customer_first_name' => $this->customerName($request),
+            'customer_last_name'  => $request->last_name ?? $request->billing['last_name'],
+            'customer_email'      => $request->customer_email ?? null,
+            'customer_phone'      => $request->billing['phone'] ?? $request->customer_phone,
+
+            'billing_first_name'  => $request->first_name ?? $request->billing['first_name'],
+            'billing_last_name'   => $request->last_name ?? $request->billing['last_name'],
+            'billing_address_1'   => $request->address ?? $request->billing['address_1'],
+            'billing_address_2'   => $request->billing['address_2'] ?? null,
+            'billing_city'        => $request->billing['city'] ?? null,
+            'billing_state'       => $request->billing['state'] ?? null,
+            'billing_zip'         => $request->billing['zip'] ?? null,
+            'billing_country'     => $request->billing['country'] ?? null,
 
             'shipping_first_name' => $request->first_name ?? $request->shipping['first_name'],
-            'shipping_last_name' => $request->last_name ?? $request->shipping['last_name'],
-            'shipping_address_1' => $request->address ?? $request->shipping['address_1'],
-            'shipping_address_2' => $request->shipping['address_2'] ?? null,
-            'shipping_city' => $request->shipping['city'] ?? null,
-            'shipping_state' => $request->shipping['state'] ?? null,
-            'shipping_zip' => $request->shipping['zip'] ?? null,
-            'shipping_country' => $request->shipping['country'] ?? null,
+            'shipping_last_name'  => $request->last_name ?? $request->shipping['last_name'],
+            'shipping_address_1'  => $request->address ?? $request->shipping['address_1'],
+            'shipping_address_2'  => $request->shipping['address_2'] ?? null,
+            'shipping_city'       => $request->shipping['city'] ?? null,
+            'shipping_state'      => $request->shipping['state'] ?? null,
+            'shipping_zip'        => $request->shipping['zip'] ?? null,
+            'shipping_country'    => $request->shipping['country'] ?? null,
 
-            'sub_total' => Cart::subTotal()->amount(),
-            'shipping_method' => Cart::shippingMethod()->name(),
-            'shipping_cost' => Cart::shippingCost()->amount(),
-            'coupon_id' => Cart::coupon()->id(),
-            'discount' => Cart::discount()->amount(),
-            'advance_pay' => 0.00,
-            'due_amount' => Cart::total()->amount(),
-            'total' => Cart::total()->amount(),
-            'payment_method' => $request->payment_method,
-            'currency' => currency(),
-            'currency_rate' => CurrencyRate::for(currency()),
-            'locale' => locale(),
-            'status' => Order::PENDING_PAYMENT,
-            'note' => $request->order_note,
+            'sub_total'           => Cart::subTotal()->amount(),
+            'shipping_method'     => Cart::shippingMethod()->name(),
+            'shipping_cost'       => Cart::shippingCost()->amount(),
+            'coupon_id'           => Cart::coupon()->id(),
+            'discount'            => Cart::discount()->amount(),
+            'advance_pay'         => 0.00,
+            'due_amount'          => Cart::total()->amount(),
+            'total'               => Cart::total()->amount(),
+            'payment_method'      => $request->payment_method,
+            'currency'            => currency(),
+            'currency_rate'       => CurrencyRate::for(currency()),
+            'locale'              => locale(),
+            'status'              => Order::PENDING_PAYMENT,
+            'note'                => $request->order_note,
         ]);
     }
 
@@ -169,7 +176,7 @@ class OrderService
                 ->attach([
                     $cartItem->product->id => [
                         'order_id' => $order->id,
-                        'qty' => $cartItem->qty,
+                        'qty'      => $cartItem->qty,
                     ],
                 ]);
         });

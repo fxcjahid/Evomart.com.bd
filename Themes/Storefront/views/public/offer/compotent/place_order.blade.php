@@ -1,9 +1,7 @@
 <section class="billing-details-section" id="order-form">
     <checkout-offer :product="{{ $product }}" :gateways="{{ $gateways }}" inline-template>
 
-        <form @submit.prevent="placeOrder" @input="errors.clear($event.target.name)" v-if="cartIsNotEmpty"
-            v-on:change="updateCart" @nice-select-updated="updateCart">
-
+        <form @submit.prevent="placeOrder" ref="form" @input="errors.clear($event.target.name)" v-if="cartIsNotEmpty">
 
             <div class="row">
                 <div class="col-lg-10 col-md-12">
@@ -15,26 +13,43 @@
                             <div class="row">
                                 <div class="col-xl-9">
                                     <div class="input-field-wrap">
-                                        <label for="c_name">আপনার নামঃ *</label>
-                                        <input type="text" name="c_name" class="form-control" required="">
+                                        <label for="fullname">আপনার নামঃ <span>*</span></label>
+                                        <input type="text" name="fullname" ref="fullname" id="fullname"
+                                            class="form-control" value="{{ old('first_name') }}"
+                                            :class="{ 'has-error': errors.has('fullname') }">
+                                        <span class="error-message" v-if="errors.has('fullname')"
+                                            v-text="errors.get('fullname')">
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-xl-9">
                                     <div class="input-field-wrap">
-                                        <label for="c_phone">মোবাইল নাম্বারঃ *</label>
-                                        <input type="number" name="c_phone" class="form-control" required="">
+                                        <label for="phone">মোবাইল নাম্বারঃ <span>*</span></label>
+                                        <input type="text" name="phone" ref="phone" id="phone"
+                                            class="form-control" :class="{ 'has-error': errors.has('phone') }">
+                                        <span class="error-message" v-if="errors.has('phone')"
+                                            v-text="errors.get('phone')">
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-18">
                                     <div class="input-field-wrap">
-                                        <label for="c_address">আপনার পরিপূর্ণ ঠিকানাঃ *</label>
-                                        <input type="text" name="c_address" class="form-control" required="">
+                                        <label for="address">আপনার পরিপূর্ণ ঠিকানাঃ <span>*</span></label>
+                                        <input type="text" name="address" ref="address" id="address"
+                                            class="form-control" value="{{ old('address') }}"
+                                            :class="{ 'has-error': errors.has('address') }">
+                                        <span class="error-message" v-if="errors.has('address')"
+                                            v-text="errors.get('address')">
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-18">
                                     <div class="input-field-wrap">
-                                        <label for="order_note">আপনার মতামত</label>
-                                        <textarea name="order_note" id="order_note" cols="30" rows="10" class="form-control"></textarea>
+                                        <label for="order_note">আপনার মতামতঃ</label>
+                                        <textarea name="order_note" ref="order_note" id="order_note" cols="30" rows="10" class="form-control"></textarea>
+                                        <span class="error-message" v-if="errors.has('order_note')"
+                                            v-text="errors.get('order_note')">
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -115,9 +130,11 @@
                                 <div class="delivery-selection" v-if="hasShippingMethod" v-cloak>
                                     <span>Select delivery area</span>
                                     <div class="form-group">
-                                        <div class="form-radio" v-for="shippingMethod in cart.availableShippingMethods">
-                                            <input type="radio" name="shipping_method" v-model="form.shipping_method"
-                                                :value="shippingMethod.name" :id="shippingMethod.name"
+                                        <div class="form-radio"
+                                            v-for="shippingMethod in cart.availableShippingMethods">
+                                            <input type="radio" name="shipping_method"
+                                                v-model="form.shipping_method" :value="shippingMethod.name"
+                                                :id="shippingMethod.name"
                                                 @change="updateShippingMethod(shippingMethod.name)">
 
                                             <label :for="shippingMethod.name" v-text="shippingMethod.label"></label>
@@ -126,6 +143,9 @@
                                                 v-html="shippingMethod.cost.inCurrentCurrency.formatted">
                                             </span>
                                         </div>
+                                        <span class="error-message" v-if="errors.has('shipping_method')"
+                                            v-text="errors.get('shipping_method')">
+                                        </span>
                                     </div>
                                 </div>
 

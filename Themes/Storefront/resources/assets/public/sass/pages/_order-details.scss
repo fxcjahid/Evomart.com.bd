@@ -111,7 +111,7 @@
         padding-top: 5px;
 
         .input-field-wrap {
-            padding-bottom: 10px;
+            padding-bottom: 25px;
         }
     }
 
@@ -129,6 +129,14 @@
                 color: var(--color-primary);
             }
         }
+    }
+
+    .error-message {
+        font-family: 'Hind Siliguri', sans-serif;
+    }
+
+    .form-control.has-error {
+        border-color: #e23e1d;
     }
 
     .order-summary-details {
@@ -185,7 +193,6 @@
 .billing-details-form .input-field-wrap textarea {
     background: #FFFFFF;
     height: 45px;
-    margin-bottom: 20px;
     border-radius: 5px;
 }
 
@@ -434,6 +441,7 @@
                 "baseImage productInfo"
                 "additionalImage additionalImage";
             column-gap: 30px;
+            grid-template-columns: 620px auto;
             row-gap: 0px;
 
             .baseImage {
@@ -450,37 +458,36 @@
 
         }
     }
-
-    .additional-image-wrap {
-        display: inline-flex;
-        margin: 20px 15px;
-        width: 100%;
-        min-width: 100%;
-
-        .additional-image {
-            height: 240px;
-            width: 260px !important;
-            margin: 10px 0 10px 25px;
-
-            &:first-child {
-                margin-left: 0px;
-            }
-
-            &:last-child {
-                margin-right: 0px;
-            }
-        }
-    }
 }
 
 .landingpage-wraping {
+
+    .description,
+    .description>*,
+    .description p,
+    .description b,
+    .description span,
+    .description h1,
+    .description h2,
+    .description h3,
+    .description h4,
+    .description h5,
+    .description h6 {
+        font-family: 'Hind Siliguri', sans-serif;
+    }
+
+    .description p {
+        font-size: 130%;
+        line-height: 215%;
+        color: #434343;
+    }
 
     .product-details-info .product-name {
         font-size: 180%;
         font-weight: 500;
         line-height: 30px;
         margin-bottom: 15px;
-        font-family: 'Hind Siliguri';
+        font-family: 'Hind Siliguri', sans-serif;
     }
 
     .product-details-info .brief-description {
@@ -502,5 +509,10 @@
             padding-left: 48px;
             padding-right: 48px;
         }
+
+        .landing-page-product .product-details-top-inner.grid {
+            grid-template-columns: 525px auto;
+        }
     }
+
 }

@@ -37,8 +37,8 @@
             </div>
         </div>
 
-        <div class="additionalImage" v-cloak>
-            <div class="additional-image-wrap">
+        <div class="additionalImage">
+            <div class="offer-additional-image-wrap">
                 @if (!$product->base_image->exists)
                     <div class="additional-image">
                         <img src="{{ asset('themes/storefront/public/images/image-placeholder.png') }}"

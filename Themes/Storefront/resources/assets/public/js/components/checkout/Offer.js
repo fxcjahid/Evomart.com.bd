@@ -15,14 +15,13 @@ export default {
 
 	data() {
 		return {  
-			form:{
-				
-			}, 
+			form:{ }, 
             cartItemForm: {
                 product_id: this.product.id,
                 qty: 1,
                 options: {},
             },
+            shippingMethodName: null,
 			placingOrder: false,
 			errors: new Errors(),  
 			authorizeNetToken: null,
@@ -33,7 +32,18 @@ export default {
 		cartIsNotEmpty() {
             return ! store.cartIsEmpty();
         },
-	},
+    },
+    
+    
+    created() {
+        this.$nextTick(() => {
+            if (store.state.cart.shippingMethodName) {
+                this.changeShippingMethod(store.state.cart.shippingMethodName);
+            } else {
+                this.updateShippingMethod(this.firstShippingMethod);
+            } 
+        });
+    },
 
 	methods: {
 		     
@@ -196,18 +206,27 @@ export default {
 
             this.updateCart();
         },
+
+        changeShippingMethod(shippingMethodName) {
+            this.shippingMethodName = shippingMethodName;
+        },
    
 		placeOrder() {
 
-			this.placingOrder = true;
+            this.placingOrder = true; 
+
+            const form = new FormData(this.$refs.form);
+            const formData = {};
+            form.forEach((value, key) => {
+                formData[key] = value;
+            });
+
+            console.log(formData);
 
 			$.ajax({
 				method: "POST",
-				url: route("checkout.guest"),
-				data: {
-					...this.form,
-					ship_to_a_different_address: +this.form.ship_to_a_different_address,
-				},
+				url: route("checkout.fromLandingPage"),
+				data: { ...formData },
 			})
 				.then((response) => {
 					if (response.redirectUrl) {

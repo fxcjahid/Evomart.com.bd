@@ -2,7 +2,7 @@
     display: flex;
     align-self: flex-start;
     align-items: flex-start;
-	width: 600px;
+    width: 600px;
 }
 
 .additional-image-wrap {
@@ -27,7 +27,7 @@
             border-color: var(--color-primary);
         }
 
-        > img {
+        >img {
             max-height: 100%;
             max-width: 100%;
         }
@@ -75,7 +75,7 @@
         cursor: crosshair;
 
         &:hover {
-            > img:not(.zoomImg) {
+            >img:not(.zoomImg) {
                 opacity: 0 !important;
             }
 
@@ -84,7 +84,7 @@
             }
         }
 
-        > img:not(.zoomImg) {
+        >img:not(.zoomImg) {
             position: absolute;
             left: 50%;
             top: 50%;
@@ -96,7 +96,7 @@
         .image-placeholder {
             width: 130px;
 
-            & ~ .zoomImg {
+            &~.zoomImg {
                 display: none !important;
             }
         }
@@ -115,13 +115,13 @@
         cursor: pointer;
         transform: rotateY(180deg);
 
-        > i {
+        >i {
             font-size: 20px;
             transition: $transition-default;
         }
 
         &:hover {
-            > i {
+            >i {
                 color: $color-default;
                 color: var(--color-primary);
             }
@@ -130,9 +130,9 @@
 }
 
 @media screen and (max-width: 1600px) {
-	.product-image-gallery {
-		width: 500px;
-	}
+    .product-image-gallery {
+        width: 500px;
+    }
 
     .additional-image-wrap {
         width: 70px;
@@ -150,7 +150,7 @@
             cursor: zoom-in;
 
             &:hover {
-                > img:not(.zoomImg) {
+                >img:not(.zoomImg) {
                     opacity: 1 !important;
                 }
 
@@ -172,6 +172,7 @@
 
 @media screen and (min-width: 577px) {
     .additional-image-wrap {
+
         .slick-prev,
         .slick-next {
             left: 0;
@@ -241,6 +242,54 @@
 
         .base-image-slide {
             padding-bottom: 90%;
+        }
+    }
+}
+
+
+.offer-additional-image-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 50px 0px 25px 15px;
+    width: 100%;
+    min-width: 100%;
+    gap: 25px;
+
+    .additional-image {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-gray-lite;
+        border-radius: $radius-default;
+        cursor: pointer;
+        overflow: hidden;
+        transition: $transition-default;
+
+        &:first-child {
+            margin-left: 0px;
+        }
+
+        &:last-child {
+            margin-right: 0px;
+        }
+
+        &.slick-current {
+            border-color: $color-default;
+            border-color: var(--color-primary);
+        }
+
+        >img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder {
+            height: 35px;
+            width: 35px;
         }
     }
 }
