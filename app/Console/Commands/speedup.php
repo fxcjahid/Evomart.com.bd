@@ -28,18 +28,20 @@ class speedup extends Command
      */
     public function handle()
     {
-        // Clear all cache before
+        /**
+         * Clear all cache before
+         */
         Artisan::call('route:clear');
         Artisan::call('config:clear');
         Artisan::call('view:clear');
         Artisan::call('cache:clear');
         Artisan::call('optimize:clear');
 
-        // Artisan::call('route:cache');
-        // Artisan::call('route:trans:cache');
-        // Artisan::call('config:cache');
-        // // Artisan::call('view:cache');
-        // Artisan::call('optimize');
+        Artisan::call('route:cache');
+        Artisan::call('route:trans:cache');
+        Artisan::call('config:cache');
+        Artisan::call('view:cache');
+        Artisan::call('optimize');
         $this->info('The command was successful!');
     }
 }

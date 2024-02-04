@@ -16,15 +16,9 @@
 
     @stack('meta')
 
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500&display=swap" rel="stylesheet">
-
-    @if (is_rtl())
-        <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.rtl.css')) }}">
-    @else
-        <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.css')) }}">
-    @endif
-
     <link rel="shortcut icon" href="{{ $favicon }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.css')) }}">
 
     @stack('styles')
 

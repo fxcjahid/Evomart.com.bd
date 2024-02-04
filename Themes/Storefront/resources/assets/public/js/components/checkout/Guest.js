@@ -330,7 +330,7 @@ export default {
 
 			$.ajax({
 				method: "POST",
-				url: route("checkout.guest"),
+				url: route("checkout.guest.store"),
 				data: {
 					...this.form,
 					ship_to_a_different_address: +this.form.ship_to_a_different_address,

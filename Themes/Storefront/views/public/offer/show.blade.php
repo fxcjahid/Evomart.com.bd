@@ -21,17 +21,9 @@
     <meta property="product:price:currency" content="{{ currency() }}">
 @endpush
 
-@push('globals')
-    <script>
-        Evomart.langs['storefront::product.reviews'] = '{{ trans('storefront::product.reviews') }}';
-        Evomart.langs['storefront::product.related_products'] = '{{ trans('storefront::product.related_products') }}';
-    </script>
-@endpush
-
 
 @section('content')
-    <product-show :product="{{ $product }}" :review-count="{{ $review->count ?? 0 }}"
-        :avg-rating="{{ $review->avg_rating ?? 0 }}" inline-template>
+    <product-show :product="{{ $product }}" inline-template>
         <section class="product-details-wrap landingpage-wraping">
             <div class="container">
 
@@ -43,50 +35,14 @@
 
                     <div class="product-details-bottom-inner">
                         <div class="product-details-tab clearfix">
-                            <ul class="nav nav-tabs tabs">
-                                <li class="nav-item">
-                                    <a href="#description" data-toggle="tab" class="nav-link"
-                                        :class="{ active: activeTab === 'description' }">
-                                        {{ trans('storefront::product.description') }}
-                                    </a>
-                                </li>
-
-                                @if ($product->hasAnyAttribute())
-                                    <li class="nav-item">
-                                        <a href="#specification" data-toggle="tab" class="nav-link"
-                                            :class="{ active: activeTab === 'specification' }">
-                                            {{ trans('storefront::product.specification') }}
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if (setting('reviews_enabled'))
-                                    <li class="nav-item">
-                                        <a href="#reviews" data-toggle="tab" class="nav-link"
-                                            :class="{ active: activeTab === 'reviews' }" v-cloak>
-                                            @{{ $trans('storefront::product.reviews', {
-    count: totalReviews
-}) }}
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-
                             <div class="tab-content">
                                 @include('public.products.show.tab_description')
-                                @include('public.products.show.tab_specification')
-                                @include('public.products.show.tab_reviews')
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
-            <modal-order-methods @close="closeModal" v-if="isLogginedUser"></modal-order-methods>
         </section>
     </product-show>
 @endsection
-
-@push('scripts')
-    <script src="{{ v(Theme::url('public/js/flatpickr.js')) }}"></script>
-@endpush

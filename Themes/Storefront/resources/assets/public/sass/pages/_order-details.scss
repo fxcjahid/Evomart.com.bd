@@ -516,3 +516,46 @@
     }
 
 }
+
+@media screen and (max-width: 600px) {
+    .product-details-wrap {
+        margin-top: 20px;
+    }
+
+    .base-image-wrap {
+        border: none;
+    }
+
+    .landingpage-wraping .container {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .landing-page {
+        padding: 0px;
+    }
+
+    .offer-additional-image-wrap {
+        margin: 20px 0 0 0px;
+        gap: 35px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .billing-details-section [class^="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .billing-details-form-outer {
+        padding-top: 10px;
+    }
+
+    .footer-container {
+        padding-top: 0 !important;
+    }
+
+    .footer-links {
+        margin-top: 38px;
+        margin-left: 40px;
+    }
+}
