@@ -42,6 +42,26 @@
 
                     </div>
                 </div>
+
+                <div class="contact">
+                    <div class="heading">
+                        <h5>Contact With Us</h5>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="fb-messenger://user-thread/106871932202300" class="cnt-btn fb-button">
+                                <i class="lab la-facebook-f"></i> Facebook Messager
+                            </a>
+                        </li>
+                        <li>
+                            <a href="whatsapp://send?phone=+8801623547800&text={{ $product->name }}"
+                                class="cnt-btn whatsapp-button">
+                                <i class="lab la-whatsapp"></i> Chat On Whatsapp
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </section>
     </product-show>

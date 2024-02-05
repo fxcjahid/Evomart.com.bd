@@ -133,7 +133,7 @@
                                         <div class="form-radio"
                                             v-for="shippingMethod in cart.availableShippingMethods">
                                             <input type="radio" name="shipping_method"
-                                                v-model="form.shipping_method" :value="shippingMethod.name"
+                                                v-model="cart.shippingMethodName" :value="shippingMethod.name"
                                                 :id="shippingMethod.name"
                                                 @change="updateShippingMethod(shippingMethod.name)">
 
@@ -153,12 +153,12 @@
                                     <div class="-subtotal-amount">
                                         <label>{{ trans('storefront::cart.subtotal') }}</label>
                                         <span class="price-amount"
-                                            v-html="cart.subTotal.inCurrentCurrency.formatted"></span>
+                                            v-html="cart.subTotal.inCurrentCurrency.amount"></span>
                                     </div>
                                     <div class="-delivery-charge">
                                         <label>Delivery Charge</label>
                                         <span class="price-amount"
-                                            v-html="cart.shippingCost.inCurrentCurrency.formatted"></span>
+                                            v-html="cart.shippingCost.inCurrentCurrency.amount"></span>
                                     </div>
                                     <div class="-total-amount">
                                         <label class="bold">{{ trans('storefront::cart.total') }}</label>

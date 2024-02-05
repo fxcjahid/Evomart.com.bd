@@ -26,7 +26,8 @@
                             অর্ডার করুন
                         </button>
 
-                        <a href="whatsapp://call?number=0123456789" class="btn whatsapp-call" target="_SELF">
+                        <a href="whatsapp://send?phone={{ setting('store_phone') }}" class="btn whatsapp-call"
+                            target="_SELF">
                             <i class="las la-phone"></i>
                             কল করুন
                         </a>

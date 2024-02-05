@@ -23,15 +23,15 @@
 
 @push('globals')
     <script>
-        Evomart.langs['storefront::product.reviews'] = '{{ trans("storefront::product.reviews") }}';
-        Evomart.langs['storefront::product.related_products'] = '{{ trans("storefront::product.related_products") }}';
+        Evomart.langs['storefront::product.reviews'] = '{{ trans('storefront::product.reviews') }}';
+        Evomart.langs['storefront::product.related_products'] = '{{ trans('storefront::product.related_products') }}';
     </script>
 
     {!! $productSchemaMarkup->toScript() !!}
 @endpush
 
 @section('breadcrumb')
-    @if (! $categoryBreadcrumb)
+    @if (!$categoryBreadcrumb)
         <li><a href="{{ route('products.index') }}">{{ trans('storefront::products.shop') }}</a></li>
     @endif
 
@@ -41,12 +41,8 @@
 @endsection
 
 @section('content')
-    <product-show
-        :product="{{ $product }}"
-        :review-count="{{ $review->count ?? 0 }}"
-        :avg-rating="{{ $review->avg_rating ?? 0 }}"
-        inline-template
-    >
+    <product-show :product="{{ $product }}" :review-count="{{ $review->count ?? 0 }}"
+        :avg-rating="{{ $review->avg_rating ?? 0 }}" inline-template>
         <section class="product-details-wrap">
             <div class="container">
                 <div class="product-details-top">
@@ -58,7 +54,8 @@
                                 <h1 class="product-name">{{ $product->name }}</h1>
 
                                 @if (setting('reviews_enabled'))
-                                    <product-rating :rating-percent="ratingPercent" :review-count="totalReviews"></product-rating>
+                                    <product-rating :rating-percent="ratingPercent"
+                                        :review-count="totalReviews"></product-rating>
                                 @endif
 
                                 @if ($product->isInStock())
@@ -82,20 +79,13 @@
                                 </div>
 
                                 <div class="details-info-top-actions">
-                                    <button
-                                        class="btn btn-wishlist"
-                                        :class="{ 'added': inWishlist }"
-                                        @click="syncWishlist"
-                                    >
+                                    <button class="btn btn-wishlist" :class="{ 'added': inWishlist }" @click="syncWishlist">
                                         <i class="la-heart" :class="inWishlist ? 'las' : 'lar'"></i>
                                         {{ trans('storefront::product.wishlist') }}
                                     </button>
 
-                                    <button
-                                        class="btn btn-compare"
-                                        :class="{ 'added': inCompareList }"
-                                        @click="syncCompareList"
-                                    >
+                                    <button class="btn btn-compare" :class="{ 'added': inCompareList }"
+                                        @click="syncCompareList">
                                         <i class="las la-random"></i>
                                         {{ trans('storefront::product.compare') }}
                                     </button>
@@ -107,12 +97,8 @@
                                     {!! $product->formatted_price !!}
                                 </div>
 
-                                <form
-                                    @submit.prevent="addToCart"
-                                    @input="errors.clear($event.target.name)"
-                                    @change="updatePrice"
-                                    @nice-select-updated="updatePrice"
-                                >
+                                <form @submit.prevent="addToCart" @input="errors.clear($event.target.name)"
+                                    @change="updatePrice" @nice-select-updated="updatePrice">
                                     <div class="product-variants">
                                         @foreach ($product->options as $option)
                                             @includeIf("public.products.show.custom_options.{$option->type}")
@@ -124,21 +110,18 @@
                                             <label for="qty">{{ trans('storefront::product.quantity') }}</label>
 
                                             <div class="input-group-quantity">
-                                                <input
-                                                    type="text"
-                                                    :value="cartItemForm.qty"
-                                                    min="1"
-                                                    max="{{ $product->manage_stock ? $product->qty : '' }}"
-                                                    id="qty"
+                                                <input type="text" :value="cartItemForm.qty" min="1"
+                                                    max="{{ $product->manage_stock ? $product->qty : '' }}" id="qty"
                                                     class="form-control input-number input-quantity"
                                                     @input="updateQuantity($event.target.value)"
                                                     @keydown.up="updateQuantity(cartItemForm.qty + 1)"
-                                                    @keydown.down="updateQuantity(cartItemForm.qty - 1)"
-                                                >
+                                                    @keydown.down="updateQuantity(cartItemForm.qty - 1)">
 
                                                 <span class="btn-wrapper">
-                                                    <button type="button" class="btn btn-number btn-plus" data-type="plus"> + </button>
-                                                    <button type="button" class="btn btn-number btn-minus" data-type="minus" disabled> - </button>
+                                                    <button type="button" class="btn btn-number btn-plus" data-type="plus">
+                                                        + </button>
+                                                    <button type="button" class="btn btn-number btn-minus"
+                                                        data-type="minus" disabled> - </button>
                                                 </span>
                                             </div>
                                         </div>
@@ -146,23 +129,16 @@
 
                                     <div class="details-info-button-actions">
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-primary buynow"
-                                            :class="{'btn-loading': loadingProduct }"
-                                            @click="buyProduct"
-                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}
-                                        >
+                                        <button type="button" class="btn btn-primary buynow"
+                                            :class="{ 'btn-loading': loadingProduct }" @click="buyProduct"
+                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}>
                                             <i class="las la-cart-arrow-down"></i>
                                             Buy Now
                                         </button>
 
-                                        <button
-                                            type="submit"
-                                            class="btn btn-primary btn-add-to-cart addToCart"
-                                            :class="{'btn-loading': addingToCart }"
-                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}
-                                        >
+                                        <button type="submit" class="btn btn-primary btn-add-to-cart addToCart"
+                                            :class="{ 'btn-loading': addingToCart }"
+                                            {{ $product->isOutOfStock() ? 'disabled' : '' }}>
                                             Add to cart
                                         </button>
                                     </div>
@@ -183,7 +159,8 @@
                                             <label>{{ trans('storefront::product.categories') }}</label>
 
                                             @foreach ($product->categories as $category)
-                                                <a href="{{ $category->url() }}">{{ $category->name }}</a>{{ $loop->last ? '' : ',' }}
+                                                <a
+                                                    href="{{ $category->url() }}">{{ $category->name }}</a>{{ $loop->last ? '' : ',' }}
                                             @endforeach
                                         </li>
                                     @endif
@@ -193,7 +170,8 @@
                                             <label>{{ trans('storefront::product.tags') }}</label>
 
                                             @foreach ($product->tags as $tag)
-                                                <a href="{{ $tag->url() }}">{{ $tag->name }}</a>{{ $loop->last ? '' : ',' }}
+                                                <a
+                                                    href="{{ $tag->url() }}">{{ $tag->name }}</a>{{ $loop->last ? '' : ',' }}
                                             @endforeach
                                         </li>
                                     @endif
@@ -214,14 +192,16 @@
                         <div class="product-details-tab clearfix">
                             <ul class="nav nav-tabs tabs">
                                 <li class="nav-item">
-                                    <a href="#description" data-toggle="tab" class="nav-link" :class="{ active: activeTab === 'description' }">
+                                    <a href="#description" data-toggle="tab" class="nav-link"
+                                        :class="{ active: activeTab === 'description' }">
                                         {{ trans('storefront::product.description') }}
                                     </a>
                                 </li>
 
                                 @if ($product->hasAnyAttribute())
                                     <li class="nav-item">
-                                        <a href="#specification" data-toggle="tab" class="nav-link" :class="{ active: activeTab === 'specification' }">
+                                        <a href="#specification" data-toggle="tab" class="nav-link"
+                                            :class="{ active: activeTab === 'specification' }">
                                             {{ trans('storefront::product.specification') }}
                                         </a>
                                     </li>
@@ -229,8 +209,11 @@
 
                                 @if (setting('reviews_enabled'))
                                     <li class="nav-item">
-                                        <a href="#reviews" data-toggle="tab" class="nav-link" :class="{ active: activeTab === 'reviews' }" v-cloak>
-                                            @{{ $trans('storefront::product.reviews', { count: totalReviews }) }}
+                                        <a href="#reviews" data-toggle="tab" class="nav-link"
+                                            :class="{ active: activeTab === 'reviews' }" v-cloak>
+                                            @{{ $trans('storefront::product.reviews', {
+    count: totalReviews
+}) }}
                                         </a>
                                     </li>
                                 @endif

@@ -11,10 +11,10 @@
                             </h4>
                             <ul class="list-inline">
                                 <li>
-                                    📱 ফেইসবুক সাপোর্ট : Trendon
+                                    📱 Whatsapp : {{ setting('store_phone') }}
                                 </li>
                                 <li>
-                                    📧 Email : info@gmail.com
+                                    📧 Email : {{ setting('store_email') }}
                                 </li>
                             </ul>
                         </div>

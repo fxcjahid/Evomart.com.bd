@@ -1,12 +1,9 @@
 <?php
 
 return [
+
     'BDT' => [
-        'name' => 'Bangladeshi Taka',
+        'name'    => 'BD Taka',
         'subunit' => 0,
-    ],
-    'TK' => [
-        'name' => 'BD Taka',
-        'subunit' => 1,
     ],
 ];

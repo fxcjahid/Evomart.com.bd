@@ -118,7 +118,7 @@ class Money implements JsonSerializable
 
     public function isNotSameCurrency($other)
     {
-        return !$this->isSameCurrency($other);
+        return ! $this->isSameCurrency($other);
     }
 
     private function assertSameCurrency($other)
@@ -176,10 +176,22 @@ class Money implements JsonSerializable
         return $this->newInstance(floor($this->amount));
     }
 
+    public function numberFormat($amount)
+    {
+        return number_format($amount, 2, '.', '');
+    }
+
     public function format($currency = null, $locale = null)
     {
         $currency = $currency ?: currency();
         $locale   = $locale ?: locale();
+
+        /**
+         * Custom currency format
+         */
+        if ($currency === 'BDT') {
+            return sprintf('TK. %s', $this->amount);
+        }
 
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
 
