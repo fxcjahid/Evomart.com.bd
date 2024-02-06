@@ -38,6 +38,8 @@ import CheckoutOffer from "./components/checkout/Offer";
 import CompareIndex from "./components/compare/Index";
 import MyWishlist from "./components/account/wishlist/Index";
 import MyAddresses from "./components/account/addresses/Index";
+import WhatsApp from "./components/WhatsAppButton";
+import FacebookButton from "./components/FacebookButton";
 
 Vue.prototype.route = route;
 Vue.prototype.$notify = notify;
@@ -80,6 +82,8 @@ Vue.component("checkout-offer", CheckoutOffer);
 Vue.component("compare-index", CompareIndex);
 Vue.component("my-wishlist", MyWishlist);
 Vue.component("my-addresses", MyAddresses);
+Vue.component("whats-app", WhatsApp);
+Vue.component("facebook-send", FacebookButton);
 
 new Vue({
     el: "#app",

@@ -49,15 +49,19 @@
                     </div>
                     <ul>
                         <li>
-                            <a href="fb-messenger://user-thread/106871932202300" class="cnt-btn fb-button">
-                                <i class="lab la-facebook-f"></i> Facebook Messager
-                            </a>
+                            <facebook-send inline-template :fbpageid="'106871932202300'">
+                                <button v-on:click="openFacebook" class="cnt-btn fb-button">
+                                    <i class="lab la-facebook-f"></i> Facebook Messager
+                                </button>
+                            </facebook-send>
                         </li>
                         <li>
-                            <a href="whatsapp://send?phone=+8801623547800&text={{ $product->name }}"
-                                class="cnt-btn whatsapp-button">
-                                <i class="lab la-whatsapp"></i> Chat On Whatsapp
-                            </a>
+                            <whats-app inline-template :number="{{ setting('store_phone') }}"
+                                :message="'{{ urldecode($product->name) }}'">
+                                <button v-on:click="openWhatsApp" class="cnt-btn whatsapp-button">
+                                    <i class="lab la-whatsapp"></i> Chat on Whatsapp
+                                </button>
+                            </whats-app>
                         </li>
                     </ul>
                 </div>

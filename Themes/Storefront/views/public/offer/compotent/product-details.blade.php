@@ -18,7 +18,7 @@
                         {!! $product->formatted_price !!}
                     </div>
 
-                    <div class="details-info-button-actions d-inline-flex">
+                    <div class="details-info-button-actions">
 
                         <button onclick="document.querySelector('#order-form').scrollIntoView({behavior: 'smooth'})"
                             class="btn btn-primary quick-buy">
@@ -26,12 +26,13 @@
                             অর্ডার করুন
                         </button>
 
-                        <a href="whatsapp://send?phone={{ setting('store_phone') }}" class="btn whatsapp-call"
-                            target="_SELF">
-                            <i class="las la-phone"></i>
-                            কল করুন
-                        </a>
-
+                        <whats-app inline-template :number="{{ setting('store_phone') }}"
+                            :message="'{{ urldecode($product->name) }}'">
+                            <button v-on:click="openWhatsApp" class="btn whatsapp-call">
+                                <i class="las la-phone"></i>
+                                কল করুন
+                            </button>
+                        </whats-app>
                     </div>
 
                 </div>
