@@ -17,3 +17,4 @@ yarn-error.log
 Modules/**/vendor/
 Modules/**/.gitkeep
 *.log
+.env

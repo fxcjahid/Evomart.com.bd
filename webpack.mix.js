@@ -44,11 +44,11 @@ configs.forEach((config) => {
     let theme = config.match(/Themes\/(\w+?)\//);
 
     if (module !== null) {
-        // commands.push(`php artisan module:publish ${module[1]}`);
+        commands.push(`php artisan module:publish ${module[1]}`);
     }
 
     if (theme !== null) {
-        // commands.push(`php artisan stylist:publish ${theme[1]}`);
+        commands.push(`php artisan stylist:publish ${theme[1]}`);
     }
 });
 
