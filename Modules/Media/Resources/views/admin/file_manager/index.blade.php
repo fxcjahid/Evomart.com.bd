@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ locale() }}">
+
 <head>
     <meta charset="UTF-8">
 
@@ -41,21 +42,46 @@
         DataTable.setRoutes('.file-manager .table', {
             index: {
                 name: 'admin.media.index',
-                params: { type: '{{ $type }}' }
+                params: {
+                    type: '{{ $type }}'
+                }
             },
             destroy: 'admin.media.destroy',
         });
 
         new DataTable('.file-manager .table', {
-            columns: [
-                { data: 'checkbox', orderable: false, searchable: false, width: '3%' },
-                { data: 'id', width: '5%' },
-                { data: 'thumbnail', orderable: false, searchable: false, width: '10%' },
-                { data: 'filename', name: 'filename' },
-                { data: 'created', name: 'created_at' },
-                { data: 'action', orderable: false, searchable: false },
+            columns: [{
+                    data: 'checkbox',
+                    orderable: false,
+                    searchable: false,
+                    width: '3%'
+                },
+                {
+                    data: 'id',
+                    width: '5%'
+                },
+                {
+                    data: 'thumbnail',
+                    orderable: false,
+                    searchable: false,
+                    width: '10%'
+                },
+                {
+                    data: 'filename',
+                    name: 'filename'
+                },
+                {
+                    data: 'created',
+                    name: 'created_at'
+                },
+                {
+                    data: 'action',
+                    orderable: false,
+                    searchable: false
+                },
             ],
         });
     </script>
 </body>
+
 </html>

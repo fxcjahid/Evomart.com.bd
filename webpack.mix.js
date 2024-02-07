@@ -30,7 +30,7 @@ if (process.env.theme !== undefined) {
     configs = [`./Themes/${theme}/webpack.mix.js`];
 }
 
-mix.setPublicPath("./")
+mix.setPublicPath("/")
     .options({ processCssUrls: false })
     .sourceMaps(true, "eval-source-map")
     .mergeManifest();
