@@ -26,7 +26,7 @@
                             অর্ডার করুন
                         </button>
 
-                        <whats-app inline-template :number="{{ setting('store_phone') }}"
+                        <whats-app inline-template :number="'{{ setting('store_phone') }}'"
                             :message="'{{ urldecode($product->name) }}'">
                             <button v-on:click="openWhatsApp" class="btn whatsapp-call">
                                 <i class="las la-phone"></i>

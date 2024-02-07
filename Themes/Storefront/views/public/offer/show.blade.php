@@ -56,7 +56,7 @@
                             </facebook-send>
                         </li>
                         <li>
-                            <whats-app inline-template :number="{{ setting('store_phone') }}"
+                            <whats-app inline-template :number="'{{ setting('store_phone') }}'"
                                 :message="'{{ urldecode($product->name) }}'">
                                 <button v-on:click="openWhatsApp" class="cnt-btn whatsapp-button">
                                     <i class="lab la-whatsapp"></i> Chat on Whatsapp
